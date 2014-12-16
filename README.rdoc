@@ -1,0 +1,39 @@
+<i>Note, this is an initial development commit. Buoy is nowhere near being able to be used for production or even development</i>
+
+= Buoy
+
+Buoy (pronounced boo-ey so it rhymes with GUI) is a GUI engine for Rails 4+. It uses browser sniffing to determine the capabilities of the requesting browser and outputs only the necessary and compatable CSS, HTML and multimedia files to the user.
+
+== Browser Sniffing
+
+Yes, it's a {contentious issue}[http://css-tricks.com/browser-detection-is-bad/], but those that oppose it generally agree, it's reacting to the browser itself that should be avoided. What we should aim for instead is determining the browser's capablilities which is what Buoy aims to do. It does the best it can to match the browser's user agent to browsers provided by the {Can I Use}[http://caniuse.com/] API call.
+
+== Capabilities VS Bugs
+
+Capabilities are provided by the "Can I Use" API while Buoy collects a list of browser bugs itself. These bugs may or may not be real bugs in the true meaning of the word, rather they are simply inconsistencies in the implementation of certian features. The main use case for these bugs is our +normalize.css+ implementation; normalize sets our expectations and therefore every rule it contains is reacting to a bug, even if some of them currently apply to every browser.
+
+== Output
+
+Buoy aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terriffic and should be used, even in while using Buoy when necessary. {Do websites need to look exactly the same in every browser}[http://dowebsitesneedtolookexactlythesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five uear old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
+
+=== CSS
+
+Using SCSS, Buoy provides the user with a minified version of CSS, their browser should be capable of rendering every rule. Rules are prefixed only with the necessary prefix and only if necessary.
+
+To do all of this, Buoy compiles a lot of css files, one for each known browser in fact. It first compiles a SCSS file for each browser in a subfolder in your assets, these SCSS files are very small but each will get rendered into a CSS file containing compatable code for that browser. When you ask Buoy to load that stylesheet, it will then look up the compiled version for that browser. The result is several times more space on your server but a lot less content delivered to the client.
+
+=== HTML
+
+Most HTML tags are abstracted into ruby helper methods.
+
+=== Fonts
+
+Fonts can be loaded using different techniques but each will include only the best format that the requesting browser is capable of and inline in base64 if their browser supports that. If the browser doesn't suppport web fonts, they won't get any @font-face rules. This means that you will need to provide every possible type of font file: woff2, woff, ttf or otf, svg, and eot.
+
+==== Deferred Font Loading
+
+This method is ideal for delivering fonts without blocking rendering, it will probbaly give you the best page speed results. It compiles a CSS file for each browser containing the compatable @font-face rule containing the base64 compiled font. This CSS file is loaded via ajax while the page is loading and then cached in localStorage so the call doesn't need to be made a second time. If the browser does not provide a localStorage implementation, the font is included in the original file instead. The method was taken directly from {Smashing Magazine}[https://gist.github.com/hdragomir/8f00ce2581795fd7b1b7]
+
+== License
+
+This project uses MIT-LICENSE.ya

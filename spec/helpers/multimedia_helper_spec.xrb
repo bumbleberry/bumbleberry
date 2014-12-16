@@ -1,0 +1,54 @@
+require "spec_helper"
+require "yaml"
+require "buoy"
+
+describe BuoyHelper, :type => :helper do
+	before(:each) do
+		init(@this = BuoyHelperMock)
+	end
+
+	it 'Svg image returns svg image for supporting browsers' do
+		browsers = [
+			[:chrome, 	4],
+			[:chrome, 	39],
+			[:ie, 		11],
+			[:ie, 		10],
+			[:ie, 		9],
+			[:firefox,	36],
+			[:firefox,	3],
+			[:opera,	26],
+			[:opera,	10],
+			[:safari,	3],
+			[:safari,	8],
+			[:android, 	3],
+			[:android, 	4.3],
+			[:android, 	4.4],
+		]
+
+		expected = '<img src="myimage.svg" alt="This is a description of my image" />'
+		browsers.each { | b |
+			use(b[0], b[1])
+			actual = @this.svg_image('myimage', 'This is a description of my image')
+			expect(expected).to eq(actual),
+			"\n\tExpected #{b[0]} #{b[1]} to support SVG but failed: \n\t\tExpected: #{expected}\n\t\tActual:   #{actual}"
+		}
+	end
+
+	it 'Svg image return png image for supporting browsers' do
+		browsers = [
+			[:ie, 		5],
+			[:ie, 		6],
+			[:ie, 		7],
+			[:ie, 		8],
+			[:android, 	2],
+		]
+
+		expected = '<img src="myimage.png" alt="This is a description of my image" />'
+		browsers.each { | b |
+			use(b[0], b[1])
+			actual = @this.svg_image('myimage', 'This is a description of my image')
+			expect(expected).to eq(actual),
+			"\n\tExpected #{b[0]} #{b[1]} to not support SVG but failed: \n\t\tExpected: #{expected}\n\t\tActual:   #{actual}"
+		}
+	end
+end

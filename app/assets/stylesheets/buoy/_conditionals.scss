@@ -1,0 +1,96 @@
+@mixin mobile_only {
+	@if $browser_type == mobile {
+		@content;
+	}
+}
+
+@mixin desktop_only {
+	@if $browser_type == desktop {
+		@content;
+	}
+}
+
+@function using($_browser, $min_version: 0, $max_version: 0) {
+	@if $browser == $_browser {
+		@if $min_version == 0 and $max_version == 0 {
+			@return true;
+		} @elseif $max_version == 0 {
+			@return $browser_version == $min_version or $browser_version == floor($min_version);
+		}
+		@return ($browser_version >= $min_version and $browser_version <= $max_version);
+	}
+	@return false;
+}
+
+@mixin only_on($_browser, $max_version: 0, $min_version: 0) {
+	@if $browser == $_browser {
+		@if $max_version == 0 or $browser_version <= $max_version {
+			@if $min_version == 0 or $browser_version >= $min_version {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin breakpoint($point1, $point2: 0) {
+	$min: 0;
+	$max: 0;
+
+	@if map-has-key($breakpoints, $point1) {
+		$bp: map-get(map-get($breakpoints, $point1), 'range');
+		
+		$min: nth($bp, 1);
+		@if length($bp) > 1 {
+			$max: nth($bp, 2);
+			$min: nth($bp, 1);
+		}
+	} @else {
+		$min: $point1;
+		
+		@if $point2 > 0 {
+			$max: $point2;
+		}
+	}
+
+	@if capable_of(css-mediaqueries) {
+		$query-string: '';
+
+		$platform-range: map-get(map-get($platforms, $browser_type), "range");
+		$p-min: nth($platform-range, 1);
+		$p-max: nth($platform-range, 2);
+
+		@if ($p-max == 0 or $p-max >= $min) and ($p-min <= $min) {
+
+			@if $min > 0 {
+				$query-string: '#{$query-string} (min-width: #{$min}#{$breakpoint-unit})';
+				
+				@if $max > 0 {
+					$query-string: '#{$query-string} and';
+				}
+			}
+			
+			@if $max > 0 {
+				$query-string: '#{$query-string} (max-width: #{$max}#{$breakpoint-unit})';
+			}
+			
+			@if str-length($query-string) > 0 {
+				@media#{$query-string} {
+					@content;
+				}
+			} @else {
+				@content;
+			}
+		}
+	} @elseif $min >= $unresponsive-width and ($max < 1 or $max <= $nonresponsive-width) {
+		@content;
+	}
+}
+
+// Includes a rule for a list of selectors, if the list is empty the rule isn't added
+@mixin for_all($selectors) {
+	@if length($selectors) > 0 {
+		#{$selectors} {
+			@content;
+		}
+	}
+}

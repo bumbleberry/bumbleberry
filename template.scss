@@ -1,0 +1,20 @@
+/*
+ *	[%path%]
+ *	Browser: [%browser_name%] [%browser_version%] (approximately [%browser_usage%]% of all users)
+ *
+ */
+
+$browser: [%browser%];
+$browser_prefix: [%browser_prefix%];
+$browser_version: [%browser_version%];
+$browser_type: [%browser_type%];
+
+//	CSS Compatibility
+[%buoy-no-markup%]
+$browser_capabilities: (
+	[%css_compatibility%]
+);
+
+@import "buoy-settings";
+@import "buoy";
+@import "[%path%]";
