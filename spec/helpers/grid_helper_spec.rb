@@ -1,4 +1,3 @@
-require "action_controller"
 require "spec_helper"
 require "yaml"
 require "buoy"

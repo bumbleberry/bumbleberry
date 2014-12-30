@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.setup
 
-require 'buoy' # and any other gems you need
+require 'buoy'
 
 module BuoyHelperMock
 	include BuoyHelper
@@ -89,6 +89,10 @@ RSpec.configure do |config|
   		user_agent = "Mozilla/5.0 (Linux; U; Android #{version}.0; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
   	end
 	allow(@test_object).to receive(:request).and_return(RequestMock.new(user_agent))
+  end
+
+  def set_agent(user_agent)
+  	allow(@test_object).to receive(:request).and_return(RequestMock.new(user_agent))
   end
 
   def render(string)
