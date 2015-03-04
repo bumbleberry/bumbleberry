@@ -1,0 +1,47 @@
+.row
+	%h1.columns
+		Welcome to the Bumbleberry Test Application
+
+=row do
+	=column({medium: 6}) do
+		%h2
+			Browser Details
+		%table.data-table
+			%tr
+				%th
+					Browser
+				%td
+					=browsers[get_browser_info[:agent]]
+			%tr
+				%th
+					Version
+				%td
+					=get_browser_info[:version]
+			%tr
+				%th
+					Type
+				%td
+					=get_caniuse_data['agents'][get_browser_info[:agent]]['type']
+			%tr
+				%th
+					Default Prefix
+				%td
+					=get_caniuse_data['agents'][get_browser_info[:agent]]['prefix']
+		%h2
+			Bumbleberry Functions
+		%table.data-table
+			- Bumbleberry::bumbleberry_functions.each do |function, data|
+				%tr
+					%th
+						%a{href: '/fn/' + function.to_s}=data[:name]
+					%td=data[:description]
+	=column({medium: 6}) do
+		%h2
+			Browser Capabilities
+		%table.data-table
+			- Bumbleberry::get_caniuse_data['data'].each do |capability, data|
+				%tr
+					%th
+						%a{href: data['spec'], target: '_blank'}=capability
+					%td
+						=get_capability(capability)

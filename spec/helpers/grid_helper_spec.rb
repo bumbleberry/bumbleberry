@@ -1,8 +1,8 @@
 require "spec_helper"
 require "yaml"
-require "buoy"
+require "bumbleberry"
 
-describe BuoyHelper, :type => :helper do
+describe BumbleberryHelper, :type => :helper do
 
 	before(:each) do
 		init

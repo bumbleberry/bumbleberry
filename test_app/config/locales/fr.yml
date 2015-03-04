@@ -1,0 +1,524 @@
+---
+fr:
+  geography:
+    countries:
+      AD: Andorre
+      AE: Émirats Arabes Unis
+      AF: Afghanistan
+      AG: Antigua et Barbuda
+      AI: Anguilla
+      AL: Albanie
+      AM: Arménie
+      AO: Angola
+      AQ: Antarctique
+      AR: Argentine
+      AS: Samoa américaines
+      AT: Autriche
+      AU: Australie
+      AW: Aruba
+      AX: Îles Åland
+      AZ: Azerbaïdjan
+      BA: Bosnie-Herzégovine
+      BB: Barbade
+      BD: Bangladesh
+      BE: Belgique
+      BF: Burkina Faso
+      BG: Bulgarie
+      BH: Bahreïn
+      BI: Burundi
+      BJ: Bénin
+      BL: Saint-Barthélémy
+      BM: Bermudes
+      BN: Brunéi Darussalam
+      BO: Bolivie
+      BQ: Bonaire, Saint-Eustache et Saba
+      BR: Brésil
+      BS: Bahamas
+      BT: Bhutan
+      BV: Île Bouvet
+      BW: Botswana
+      BY: Biélorussie
+      BZ: Belize
+      CA: Canada
+      CC: Îles Cocos
+      CD: RDC
+      CF: Centrafrique
+      CG: Congo-Brazzaville
+      CH: Suisse
+      CI: Côte d'Ivoire
+      CK: Îles Cook
+      CL: Chili
+      CM: Cameroun
+      CN: Chine
+      CO: Colombie
+      CR: Costa Rica
+      CU: Cuba
+      CV: Cap-Vert
+      CW: Curaçao
+      CX: Île Christmas
+      CY: Chypre
+      CZ: Tchéquie
+      DE: Allemagne
+      DJ: Djibouti
+      DK: Danemark
+      DM: Dominique
+      DO: République Dominicaine
+      DZ: Algérie
+      EC: Équateur
+      EE: Estonie
+      EG: Égypte
+      EH: Sahara Occidental
+      ER: Érythrée
+      ES: Espagne
+      ET: Éthiopie
+      FI: Finlande
+      FJ: Fidji
+      FK: Îles Malouines
+      FM: Micronésie
+      FO: Îles Féroé
+      FR: France
+      GA: Gabon
+      GB: Royaume-Uni
+      GD: Grenade
+      GE: Géorgie
+      GF: Guyane
+      GG: Guernesey
+      GH: Ghana
+      GI: Gibraltar
+      GL: Groenland
+      GM: Gambie
+      GN: Guinée
+      GP: Guadeloupe
+      GQ: Guinée équatoriale
+      GR: Grèce
+      GS: Géorgie du Sud et les îles Sandwich du Sud
+      GT: Guatemala
+      GU: Guam
+      GW: Guinée-Bissau
+      GY: Guyana
+      HK: Hong Kong
+      HM: Île Heard et îles McDonald
+      HN: Honduras
+      HR: Croatie
+      HT: Haïti
+      HU: Hongrie
+      ID: Indonésie
+      IE: Irlande
+      IL: Israël
+      IM: Île de Man
+      IN: Inde
+      IO: Territoire britannique de l'océan Indien
+      IQ: Irak
+      IR: Iran
+      IS: Islande
+      IT: Italie
+      JE: Jersey
+      JM: Jamaïque
+      JO: Jordanie
+      JP: Japon
+      KE: Kenya
+      KG: Kirghizistan
+      KH: Cambodge
+      KI: Kiribati
+      KM: Comores
+      KN: Saint-Christophe-et-Niévès
+      KP: Corée du Nord
+      KR: Corée du Sud
+      KW: Koweït
+      KY: Îles Caïmans
+      KZ: Kazakhstan
+      LA: Laos
+      LB: Liban
+      LC: Sainte-Lucie
+      LI: Liechtenstein
+      LK: Sri Lanka
+      LR: Liberia
+      LS: Lesotho
+      LT: Lituanie
+      LU: Luxembourg
+      LV: Lettonie
+      LY: Libye
+      MA: Maroc
+      MC: Monaco
+      MD: Moldavie
+      ME: Monténégro
+      MF: Saint-Martin
+      MG: Madagascar
+      MH: Îles Marshall
+      MK: Macédoine
+      ML: Mali
+      MM: Myanmar
+      MN: Mongolie
+      MO: Macao
+      MP: Îles Mariannes du Nord
+      MQ: Martinique
+      MR: Mauritanie
+      MS: Montserrat
+      MT: Malte
+      MU: Maurice
+      MV: Maldives
+      MW: Malawi
+      MX: Mexique
+      MY: Malaisie
+      MZ: Mozambique
+      NA: Namibie
+      NC: Nouvelle-Calédonie
+      NE: Niger
+      NF: Île Norfolk
+      NG: Nigeria
+      NI: Nicaragua
+      NL: Pays-Bas
+      'NO': Norvège
+      NP: Népal
+      NR: Nauru
+      NU: Nioué
+      NZ: Nouvelle-Zélande
+      OM: Oman
+      PA: Panama
+      PE: Pérou
+      PF: Polynésie Française
+      PG: Papouasie-Nouvelle Guinée
+      PH: Philippines
+      PK: Pakistan
+      PL: Pologne
+      PM: Saint-Pierre et Miquelon
+      PN: Pitcairn
+      PR: Porto Rico
+      PS: Territoire palestinien
+      PT: Portugal
+      PW: Palaos
+      PY: Paraguay
+      QA: Qatar
+      RE: Réunion
+      RO: Roumanie
+      RS: Serbie
+      RU: Russie
+      RW: Rwanda
+      SA: Arabie saoudite
+      SB: Îles Salomon
+      SC: Seychelles
+      SD: Soudan
+      SE: Suède
+      SG: Singapour
+      SH: Sainte-Hélène
+      SI: Slovénie
+      SJ: Svalbard et Île Jan Mayen
+      SK: Slovaquie
+      SL: Sierra Leone
+      SM: Saint-Marin
+      SN: Sénégal
+      SO: Somalie
+      SR: Surinam
+      SS: Sud-Soudan
+      ST: São Tomé-et-Príncipe
+      SV: Salvador
+      SX: Saint-Martin
+      SY: Syrie
+      SZ: Swaziland
+      TC: Îles Turques-et-Caïques
+      TD: Tchad
+      TF: Terres australes françaises
+      TG: République Togolaise
+      TH: Thaïlande
+      TJ: Tadjikistan
+      TK: Tokelau
+      TL: Timor Oriental
+      TM: Turkménistan
+      TN: Tunisie
+      TO: Tonga
+      TR: Turquie
+      TT: Trinidad et Tobago
+      TV: Tuvalu
+      TW: Taïwan
+      TZ: Tanzanie
+      UA: Ukraine
+      UG: Ouganda
+      UM: Îles mineures éloignées des États-Unis
+      US: États-Unis
+      UY: Uruguay
+      UZ: Ouzbékistan
+      VA: Vatican
+      VC: Saint-Vincent-et-les Grenadines
+      VE: Vénézuéla
+      VG: Îles Vierges
+      VI: Îles Vierges des États-Unis
+      VN: Vietnam
+      VU: Vanuatu
+      WF: Wallis-et-Futuna
+      WS: Samoa
+      XK: Kosovo
+      YE: Yémen
+      YT: Mayotte
+      ZA: Afrique du Sud
+      ZM: Zambie
+      ZW: Zimbabwe
+    subregions:
+      AR:
+        BA: Buenos Aires
+      AT:
+        Bgld: Burgenland
+      AU:
+        ACT: Territoire de la capitale australienne
+        NSW: Nouvelle-Galles du Sud
+        NT: Territoire du Nord
+        QLD: Queensland
+        SA: Australie-Méridionale
+        TAS: Tasmanie
+        VIC: Victoria
+        WA: Australie-Occidentale
+      BR:
+        AC: Acre
+        AL: Alagoas
+        AP: Amapá
+        AM: Amazonas
+        BA: Bahia
+        CE: Ceará
+        ES: Espírito Santo
+        DF: District fédéral
+        GO: Goiás
+        MA: Maranhão
+        MT: Mato Grosso
+        MS: Mato Grosso do Sul
+        MG: Minas Gerais
+        PB: Paraiba
+        PR: Paraná
+        PA: Pará
+        PE: Pernambuco
+        PI: Piauí
+        RN: Rio Grande do Norte
+        RS: Rio Grande do Sul
+        RJ: Rio de Janeiro
+        RO: Rondônia
+        RR: Roraima
+        SC: Santa Catarina
+        SE: Sergipe
+        SP: São Paulo
+        TO: Tocantins
+      CA:
+        AB: Alberta
+        BC: Colombie-Britannique
+        MB: Manitoba
+        NB: Nouveau-Brunswick
+        NL: Terre-Neuve-et-Labrador
+        NT: Territoires du Nord-Ouest
+        NS: Nouvelle-Écosse
+        NU: Nunavut
+        'ON': Ontario
+        PE: Île-du-Prince-Édouard
+        QC: Québec
+        SK: Saskatchewan
+        YT: Yukon
+      CH:
+        TG: Thurgovie
+        VD: Vaud
+        ZH: Zurich
+      DE:
+        H+H: Hambourg
+        NRW: Rhénanie du Nord-Westphalie
+      IT:
+        FVG: Frioul-Vénétie julienne
+      MX:
+        Ags: État d'Aguascalientes
+        BCS: Basse-Californie du Sud
+        CAM: État de Campeche
+        Chis: Chiapas
+        CHH: État de Chihuahua
+        Coah: Coahuila
+        COL: État de Colima
+        DUR: État de Durango
+        BC: Basse-Californie du Nord
+        MEX: Estado de México
+        GUA: État de Guanajuato
+        GRO: Guerrero
+        HID: État dHidalgo
+        JAL: Jalisco
+        MIC: Michoacán
+        MOR: Morelos
+        NAY: Nayarit
+        NL: Nuevo León
+        OAX: État de Oaxaca
+        PUE: État de Puebla
+        Qro: Querétaro de Arteaga
+        ROO: Quintana Roo
+        SLP: San Luis Potosí
+        SIN: Sinaloa
+        SON: Sonora
+        TAB: Tabasco
+        Tamps: Tamaulipas
+        TLA: État de Tlaxcala
+        VER: Veracruz
+        YUC: Yucatán
+        ZAC: État de Zacatecas
+      MY:
+        JHR: Johor
+        KDH: Kedah
+        KTN: Kelantan
+        KUL: Kuala Lumpur
+        LBN: Labuan
+        MLK: Melaka
+        NSN: Negeri Sembilan
+        PHG: Pahang
+        PNG: Penang
+        PRK: Perak
+        PLS: Perlis
+        PJY: Putrajaya
+        SBH: Sabah
+        SRW: Sarawak
+        SGR: Selangor
+        TRG: Terengganu
+      NI:
+        RAAN: North Atlantic Autonomous Region (RAAN)
+      NL:
+        GLD: Gueldre
+      PH:
+        ARMM: Région autonome en Mindanao musulmane
+      US:
+        AL: Alabama
+        AK: Alaska
+        AZ: Arizona
+        AR: Arkansas
+        CA: Californie
+        CO: Colorado
+        CT: Connecticut
+        DE: Delaware
+        FL: Floride
+        GA: Géorgie
+        HI: Hawaï
+        ID: Idaho
+        IL: Illinois
+        IN: Indiana
+        IA: Iowa
+        KS: Kansas
+        KY: Kentucky
+        LA: Louisiane
+        ME: Maine
+        MD: Maryland
+        MA: Massachusetts
+        MI: Michigan
+        MN: Minnesota
+        MS: État du Mississippi
+        MO: Missouri
+        MT: Montana
+        NE: Nebraska
+        NV: Nevada
+        NH: New Hampshire
+        NJ: New Jersey
+        NM: Nouveau-Mexique
+        NY: New York
+        NC: Caroline du Nord
+        ND: Dakota du Nord
+        OH: Ohio
+        OK: Oklahoma
+        OR: Oregon
+        PA: Pennsylvanie
+        RI: Rhode Island
+        SC: Caroline du Sud
+        SD: Dakota du Sud
+        TN: Tennessee
+        TX: Texas
+        UT: Utah
+        VT: Vermont
+        VA: Virginie
+        WA: État de Washington
+        DC: Washington, D.C.
+        WV: Virginie-Occidentale
+        WI: Wisconsin
+        WY: Wyoming
+  languages:
+    af: afrikaans
+    am: amharique
+    ar: arabe
+    az: azéri
+    be: biélorusse
+    bg: bulgare
+    bn: bengali
+    bo: tibétain
+    bs: bosniaque
+    ca: catalan
+    cs: tchèque
+    cy: gallois
+    da: danois
+    de: allemand
+    dz: dzongkha
+    el: grec
+    en: anglais
+    eo: espéranto
+    es: espagnol
+    et: estonien
+    eu: basque
+    fa: persan
+    fi: finnois
+    fo: féroïen
+    fr: français
+    fy: frison occidental
+    ga: irlandais
+    gl: galicien
+    gu: gujarati
+    ha: haoussa
+    he: hébreu
+    hi: hindi
+    hr: croate
+    hu: hongrois
+    id: indonésien
+    is: islandais
+    it: italien
+    ja: japonais
+    jv: javanais
+    ka: géorgien
+    km: khmer
+    kn: kannada
+    ko: coréen
+    ku: kurde
+    lb: luxembourgeois
+    ln: lingala
+    lt: lituanien
+    lv: letton
+    mg: malgache
+    mk: macédonien
+    ml: malayalam
+    mn: mongol
+    mr: marathe
+    ms: malais
+    mt: maltais
+    my: birman
+    na: nauruan
+    nb: norvégien bokmål
+    ne: népalais
+    nl: néerlandais
+    nn: norvégien nynorsk
+    'no': norvégien
+    om: oromo
+    or: oriya
+    pa: pendjabi
+    pl: polonais
+    ps: pachto
+    pt: portugais
+    ro: roumain
+    ru: russe
+    se: sami du Nord
+    sh: serbo-croate
+    sk: slovaque
+    sl: slovène
+    sm: samoan
+    so: somali
+    sq: albanais
+    sr: serbe
+    sv: suédois
+    sw: swahili
+    ta: tamoul
+    te: télougou
+    th: thaï
+    ti: tigrigna
+    tk: turkmène
+    tl: tagalog
+    to: tonguien
+    tr: turc
+    uk: ukrainien
+    ur: ourdou
+    vi: vietnamien
+    wa: wallon
+    yo: yoruba
+    zh: chinois
+    zu: zoulou
+  home_page:
+    Welcome_to_our_Site: Bonjour!

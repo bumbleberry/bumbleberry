@@ -1,10 +1,10 @@
 require "spec_helper"
 require "yaml"
-require "buoy"
+require "bumbleberry"
 
-describe BuoyHelper, :type => :helper do
+describe BumbleberryHelper, :type => :helper do
 	before(:each) do
-		init(@this = BuoyHelperMock)
+		init(@this = BumbleberryHelperMock)
 	end
 
 	it 'Svg image returns svg image for supporting browsers' do

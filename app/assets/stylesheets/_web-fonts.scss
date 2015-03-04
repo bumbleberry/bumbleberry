@@ -1,5 +1,7 @@
-$buoy-no-markup: true;
+$bumbleberry-no-markup: true;
 
-@import "buoy";
+@import "bumbleberry";
 
-@include font(primary);
+@each $font, $font-data in $fonts {
+	@include font($font);
+}

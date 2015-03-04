@@ -8,3 +8,7 @@ test/dummy/tmp/
 test/dummy/.sass-cache
 caniuse.json
 Gemfile.lock
+test_app/tmp
+test_app/app/assets/stylesheets/application/*
+test_app/app/assets/stylesheets/web-fonts/*
+.sass-cache

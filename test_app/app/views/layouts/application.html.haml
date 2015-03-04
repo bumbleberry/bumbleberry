@@ -1,0 +1,25 @@
+!!!
+%html{ lang: I18n.locale.to_s, class: (@translatable ? nil : 'example-page')}
+	%head
+		-# Make sure to mark the title as not translatable
+		%title='Bumbleberry Test Application'
+		=# stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Open+Sans:400,800', media: 'all'
+		=# stylesheet_link_tag 'http://fonts.googleapis.com/css?family=Cutive+Mono', media: 'all'
+		= inject_css!
+		= javascript_include_tag 'application'
+		%meta{'http-equiv' => 'content-language', 'content' => 'en'}
+		= csrf_meta_tags
+		- if get_browser_info[:agent] == 'ie' && get_browser_info[:version].to_i < 10
+			= javascript_include_tag "http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js"
+%body
+	%header#main-header
+		=row do
+			=column do
+				%h1
+					%a{href: '/'}
+						= svg('logo', 'Bumbleberry Logo')
+						Bumbleberry
+	%main
+		= yield
+	%footer#main-footer
+	

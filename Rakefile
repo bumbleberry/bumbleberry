@@ -17,7 +17,7 @@ task :default => :test
 #
 #RDoc::Task.new(:rdoc) do |rdoc|
 #  rdoc.rdoc_dir = 'rdoc'
-#  rdoc.title    = 'Buoy'
+#  rdoc.title    = 'Bumbleberry'
 #  rdoc.options << '--line-numbers'
 #  rdoc.rdoc_files.include('README.rdoc')
 #  rdoc.rdoc_files.include('lib/**/*.rb')
@@ -40,11 +40,11 @@ task :default => :test
 #
 #task default: :test
 
-#namespace :buoy do
-#  require File.expand_path('../lib/buoy', __FILE__)
+#namespace :bumbleberry do
+#  require File.expand_path('../lib/bumbleberry', __FILE__)
 #
 #  task :test do
-#    Buoy::test!
+#    Bumbleberry::test!
 #  end
 #end
 

@@ -1,0 +1,212 @@
+---
+page_titles.home.Welcome_to_our_Site:
+  pages:
+  - /
+  context: t
+  examples:
+  - 1
+  - 2
+  - 3
+  - 4
+page_descriptions.home.welcome_paragraph:
+  pages:
+  - /
+  context: p
+  examples:
+  - 1
+  - 2
+  - 3
+  - 4
+page_titles.home.recent_posts:
+  pages:
+  - /
+  context: t
+  examples:
+  - 1
+  - 2
+  - 3
+  - 4
+notices.no_posts:
+  pages:
+  - /
+  context: t
+  examples:
+  - 1
+page_titles.site_name:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+forms.labels.user.name:
+  pages:
+  - /
+  examples:
+  - 1
+  - 2
+forms.placeholders.user.name:
+  pages:
+  - /
+  examples:
+  - 1
+  - 2
+forms.actions.user.login:
+  pages:
+  - /
+  examples:
+  - 1
+  - 2
+forms.labels.select_language.language:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+languages.en:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+date.formats.long:
+  pages:
+  - /
+  examples:
+  - 2
+  - 3
+  - 4
+date.month_names:
+  pages:
+  - /
+  examples:
+  - 2
+  - 3
+  - 4
+meta-data.posts.author_and_date:
+  pages:
+  - /
+  vars:
+  - :author
+  - :date
+  examples:
+  - 2
+  - 3
+  - 4
+page_titles.posts.create_post:
+  pages:
+  - /
+  context: t
+  examples:
+  - 3
+  - 4
+forms.labels.blog.title:
+  pages:
+  - /
+  examples:
+  - 3
+  - 4
+forms.placeholders.blog.title:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 3
+  - 4
+  - 5
+forms.labels.blog.content:
+  pages:
+  - /
+  examples:
+  - 3
+  - 4
+forms.placeholders.blog.content:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 3
+  - 4
+  - 5
+forms.actions.blog.create:
+  pages:
+  - /
+  examples:
+  - 3
+  - 4
+forms.actions.user.logout:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 3
+  - 4
+  - 5
+forms.actions.generic.start_translating:
+  pages:
+  - /
+  - /translate_post/:id
+  examples:
+  - 3
+  - 4
+  - 5
+models.names.post:
+  pages:
+  - /
+  examples:
+  - 4
+languages.fr:
+  pages:
+  - /
+  examples:
+  - 4
+translate.content.requires_translation:
+  pages:
+  - /
+  vars:
+  - :model
+  - :language
+  examples:
+  - 4
+page_titles.translate.translate_post:
+  pages:
+  - /translate_post/:id
+  context: t
+  examples:
+  - 5
+translate.content.original:
+  pages:
+  - /translate_post/:id
+  examples:
+  - 5
+translate.content.translation:
+  pages:
+  - /translate_post/:id
+  examples:
+  - 5
+content.attributes.posts.title:
+  pages:
+  - /translate_post/:id
+  examples:
+  - 5
+content.attributes.posts.content:
+  pages:
+  - /translate_post/:id
+  examples:
+  - 5
+forms.actions.blog.update:
+  pages:
+  - /translate_post/:id
+  examples:
+  - 5

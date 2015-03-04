@@ -1,0 +1,188 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+#{$secondary-font-selectors} {
+	@include font-family(secondary);
+
+	a {
+		@if capable_of(inherit) {
+			color: inherit;
+			text-decoration: inherit;
+		} @else {
+			color: #000;
+			text-decoration: none;
+		}
+	}
+}
+
+main {
+	margin: 0 auto;
+}
+
+section {
+	padding: 0 1em;
+}
+
+header {
+	display: block;
+}
+
+#main-header {
+	width: 100%;
+	background-color: #222;
+	height: 5em;
+
+	.row {
+		margin: 0 auto;
+		padding: 1em 0;
+		color: #FFF;
+		overflow: auto;
+	}
+
+	h1 {
+		display: inline-block;
+		margin: 0;
+		line-height: 0.75em;
+	}
+
+	svg, img {
+		fill: #FFF;
+		width: 1.5em;
+		height: 1.5em;
+		vertical-align: middle;
+	}
+
+	h1:hover path {
+		@include _(transition, all 100ms ease-in-out);
+
+		&:nth-child(5n) {
+			fill: steelblue;
+		}
+		&:nth-child(5n+1) {
+			fill: crimson;
+		}
+		&:nth-child(5n+2) {
+			fill: chocolate;
+		}
+		&:nth-child(5n+3) {
+			fill: #444;
+		}
+		&:nth-child(5n+4) {
+			fill: slateblue;
+		}
+	}
+}
+
+footer#main-footer {
+	background-color: #222;
+	height: 3em;
+	margin-top: 5em;
+}
+
+input[type="submit"] {
+	font-family: inherit;
+}
+
+.browser-name:before {
+	content: '#{$browser}';
+	text-transform: capitalize;
+}
+
+.browser-version:before {
+	content: '#{$browser_version}';
+}
+
+.browser-type:before {
+	content: '#{$browser_type}';
+}
+
+.browser-prefix:before {
+	content: '#{$browser_prefix}';
+}
+
+table.data-table {
+	margin: 0 1em;
+
+	@if capable_of(css3-colors) {
+		background-color: rgba(#FFF, 0.5);
+		border: 1em solid transparent;
+	} @else {
+		background-color: #FCF4EA;
+		border: 1em solid #FCF4EA;
+	}
+}
+
+th, td {
+	text-align: left;
+	padding: 0.25em 0.5em 0;
+}
+
+@each $capability, $data in $browser_capabilities {
+	.capability-show.capability--#{$capability}:before {
+		content: '#{$data}';
+	}
+}
+
+$svg: 'svg, .svg-preview img';
+@if not capable_of(svg) {
+	$svg: 'img';
+
+	.svg-preview div {
+		background-color: #FFF;
+	}
+}
+
+.svg-preview #{$svg} {
+	@if capable_of(svg) {
+		height: 100%;
+		width: 100%;
+		padding: 1em;
+	} @else {
+		width: 94%;
+		padding: 3%;
+	}
+	background-color: #FFF;
+	@include _(box-shadow, 0 0 5em -2em);
+	@include checkered-background(1em, #DDD);
+}
+
+.svg-preview.svg-sprite {
+	width: 23%;
+	margin: 1%;
+	float: left;
+}
+
+@if not capable_of(inherit) {
+	#main-header a {
+		color: #FFF;
+	}
+}
+
+#demo-grid {
+	.content {
+		background-color: steelblue;
+		min-height: 3em;
+		font-size: 1em;
+		text-align: center;
+		padding-top: 1em;
+		color: #FFF;
+		@include font-family(secondary);
+	}
+
+	.row {
+		border-bottom: 0.5em solid slateblue;
+	}
+}

@@ -1,26 +1,26 @@
-<i>Note, this is an initial development commit. Buoy is nowhere near being able to be used for production or even development</i>
+<i>Bumbleberry is nowhere near being able to be used for production. I am actively looking for collaborators, please let me know if you're at all interested.</i>
 
-= Buoy
+= Bumbleberry
 
-Buoy (pronounced boo-ey so it rhymes with GUI) is a GUI engine for Rails 4+. It uses browser sniffing to determine the capabilities of the requesting browser and outputs only the necessary and compatable CSS, HTML and multimedia files to the user.
+Bumbleberry is a GUI engine for Rails 4+. It uses browser sniffing to determine the capabilities of the requesting browser and outputs only the necessary and compatible CSS, HTML and multimedia files to the user.
 
 == Browser Sniffing
 
-Yes, it's a {contentious issue}[http://css-tricks.com/browser-detection-is-bad/], but those that oppose it generally agree, it's reacting to the browser itself that should be avoided. What we should aim for instead is determining the browser's capablilities which is what Buoy aims to do. It does the best it can to match the browser's user agent to browsers provided by the {Can I Use}[http://caniuse.com/] API call.
+Yes, it's a {contentious issue}[http://css-tricks.com/browser-detection-is-bad/], but those that oppose it generally agree, it's reacting to the browser itself that should be avoided. What we should aim for instead is determining the browser's capablilities which is what Bumbleberry aims to do. It does the best it can to match the browser's user agent to browsers provided by the {Can I Use}[http://caniuse.com/] API call.
 
 == Capabilities VS Bugs
 
-Capabilities are provided by the "Can I Use" API while Buoy collects a list of browser bugs itself. These bugs may or may not be real bugs in the true meaning of the word, rather they are simply inconsistencies in the implementation of certian features. The main use case for these bugs is our +normalize.css+ implementation; normalize sets our expectations and therefore every rule it contains is reacting to a bug, even if some of them currently apply to every browser.
+Capabilities are provided by the "Can I Use" API while Bumbleberry collects a list of browser bugs itself. These bugs may or may not be real bugs in the true meaning of the word, rather they are simply inconsistencies in the implementation of certain features. The main use case for these bugs is our +normalize.css+ implementation; normalize sets our expectations and therefore every rule it contains is reacting to a bug, even if some of them currently apply to every browser.
 
 == Output
 
-Buoy aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terriffic and should be used, even in while using Buoy when necessary. {Do websites need to look exactly the same in every browser}[http://dowebsitesneedtolookexactlythesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five uear old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
+Bumbleberry aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terriffic and should be used, even in while using Bumbleberry when necessary. {Do websites need to look exactly the same in every browser}[http://dowebsitesneedtolookexactlythesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five uear old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
 
 === CSS
 
-Using SCSS, Buoy provides the user with a minified version of CSS, their browser should be capable of rendering every rule. Rules are prefixed only with the necessary prefix and only if necessary.
+Using SCSS, Bumbleberry provides the user with a minified version of CSS, their browser should be capable of rendering every rule. Rules are prefixed only with the necessary prefix and only if necessary.
 
-To do all of this, Buoy compiles a lot of css files, one for each known browser in fact. It first compiles a SCSS file for each browser in a subfolder in your assets, these SCSS files are very small but each will get rendered into a CSS file containing compatable code for that browser. When you ask Buoy to load that stylesheet, it will then look up the compiled version for that browser. The result is several times more space on your server but a lot less content delivered to the client.
+To do all of this, Bumbleberry compiles a lot of css files, one for each known browser in fact. It first compiles a SCSS file for each browser in a subfolder in your assets, these SCSS files are very small but each will get rendered into a CSS file containing compatible code for that browser. When you ask Bumbleberry to load that stylesheet, it will then look up the compiled version for that browser. The result is several times more space on your server but a lot less content delivered to the client.
 
 === HTML
 
@@ -28,11 +28,52 @@ Most HTML tags are abstracted into ruby helper methods.
 
 === Fonts
 
-Fonts can be loaded using different techniques but each will include only the best format that the requesting browser is capable of and inline in base64 if their browser supports that. If the browser doesn't suppport web fonts, they won't get any @font-face rules. This means that you will need to provide every possible type of font file: woff2, woff, ttf or otf, svg, and eot.
+Fonts can be loaded using different techniques but each will include only the best format that the requesting browser is capable of and inline in base64 if their browser supports that. If the browser doesn't support web fonts, they won't get any @font-face rules. This means that you will need to provide every possible type of font file: woff2, woff, ttf or otf, svg, and eot.
 
 ==== Deferred Font Loading
 
-This method is ideal for delivering fonts without blocking rendering, it will probbaly give you the best page speed results. It compiles a CSS file for each browser containing the compatable @font-face rule containing the base64 compiled font. This CSS file is loaded via ajax while the page is loading and then cached in localStorage so the call doesn't need to be made a second time. If the browser does not provide a localStorage implementation, the font is included in the original file instead. The method was taken directly from {Smashing Magazine}[https://gist.github.com/hdragomir/8f00ce2581795fd7b1b7]
+This method is ideal for delivering fonts without blocking rendering, it will probably give you the best page speed results. It compiles a CSS file for each browser containing the compatible @font-face rule containing the base64 compiled font. This CSS file is loaded via ajax while the page is loading and then cached in localStorage so the call doesn't need to be made a second time. If the browser does not provide a localStorage implementation, the font is included in the original file instead. The method was taken directly from {Smashing Magazine}[https://gist.github.com/hdragomir/8f00ce2581795fd7b1b7]
+
+=== Responsive Grid
+
+Bumbleberry borrows heavily from {Foundation's}[http://foundation.zurb.com/docs/components/grid.html] grid. Using the rails helper methods +row+ and +column+ will produce a grid of divs for most browsers but for those lacking the +box-sizing+ css property (namely ie <8), old school tables will be used. The number of columns is 12 by default but can be changed in the +settings.json+ file.
+
+For example (in HAML):
+
+ = row do
+     = column({small: 12, medium: 8, large: 6})
+         %p='My first paragraph'
+     = column({small: 12, medium: 4, large: 6})
+         %p='My second paragraph'
+
+will produce:
+
+ <div class="row">
+     <div class="columns small-12 medium-8 large-6">
+         <p>My first paragraph</p>
+     </div>
+     <div class="columns small-12 medium-4 large-6">
+         <p>My second paragraph</p>
+     </div>
+ </div>
+
+for most browsers, but in IE 6 users will be given:
+
+ <table class="row">
+     <tr>
+         <th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set"><th class="column-set">
+     </tr>
+     <tr>
+         <td class="columns" rowspan="8">
+             <p>My first paragraph</p>
+         </td>
+         <td class="columns" rowspan="4">
+             <p>My second paragraph</p>
+         </td>
+     </tr>
+ </table>
+
+Yes, this hurts my eyes too. But this is how we would have done it in 2001 and there was a reason for that, it was the most dependable way to render this layout in IE6 (well maybe not exactly this way but perhaps we can improve that eventually).
 
 == License
 

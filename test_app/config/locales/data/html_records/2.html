@@ -1,0 +1,58 @@
+<!DOCTYPE html><html class="example-page" lang="en"><head>
+<title>LinguaFranca TestApp</title>
+<link rel="stylesheet" media="all" href="http://fonts.googleapis.com/css?family=Open+Sans:400,800">
+<link rel="stylesheet" media="all" href="http://fonts.googleapis.com/css?family=Cutive+Mono">
+<link rel="stylesheet" media="all" href="/assets/application.css">
+<script src="/assets/application.js"></script>
+<meta content="en" http-equiv="content-language">
+
+</head>
+<body>
+
+
+<header>
+<div>
+<h1>
+<a href="/">
+<span class="translated-content" data-i18n-key="page_titles.site_name" data-i18n-needs-translation="1">site name</span>
+</a>
+</h1>
+<form class="new_user" id="new_user" action="/login" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><label for="user_name"><span class="translated-content" data-i18n-key="forms.labels.user.name" data-i18n-needs-translation="1">name</span></label>
+<span class="translated-content" data-i18n-key="forms.placeholders.user.name" data-i18n-needs-translation="1"><input placeholder="name" type="text" name="user[name]" id="user_name"></span>
+<span class="translated-content" data-i18n-key="forms.actions.user.login" data-i18n-needs-translation="1"><input type="submit" name="commit" value="login"></span>
+</form>
+<form method="get" name="language_form">
+<label for="language"><span class="translated-content" data-i18n-key="forms.labels.select_language.language" data-i18n-needs-translation="1">language</span></label>
+<select name="language" id="language" scope="languages" onchange="changeLocale()"><option selected="selected" value="en">English</option></select>
+</form>
+</div>
+</header>
+<main>
+<h1>
+<span class="translated-content" data-i18n-key="page_titles.home.Welcome_to_our_Site" data-i18n-needs-translation="1">Mauris Lacinia Sapien Quis Libero</span>
+</h1>
+<p>
+<span class="translated-content" data-i18n-key="page_descriptions.home.welcome_paragraph" data-i18n-needs-translation="1">Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.</span>
+</p>
+<h2><span class="translated-content" data-i18n-key="page_titles.home.recent_posts" data-i18n-needs-translation="1">Sed Ante</span></h2>
+<section id="posts">
+<article>
+<div class="post-meta">
+<span class="translated-content" data-i18n-key="meta-data.posts.author_and_date" data-i18n-needs-translation="0">Posted on&nbsp;<time datetime="2015-02-10 03:57:32 UTC">February&nbsp;10,&nbsp;2015</time>&nbsp;by&nbsp;<span class="author" rel="author">Username</span></span>
+</div>
+<h3>Mon Premiere Post</h3>
+<p>Hi, welcome to my blog. Here I will write all sorts of interesting things.</p>
+</article>
+</section>
+
+<script>
+  function changeLocale() {
+  	document.language_form.submit();
+  }
+  function toggleTranslate() {
+  	document.toggle_translate_form.submit();
+  }
+</script>
+</main>
+
+</body></html>

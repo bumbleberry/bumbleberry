@@ -1,10 +1,10 @@
 require 'bundler/setup'
 Bundler.setup
 
-require 'buoy'
+require 'bumbleberry'
 
-module BuoyHelperMock
-	include BuoyHelper
+module BumbleberryHelperMock
+	include BumbleberryHelper
 	
 	def cache_retrieve(key)
 		nil
@@ -14,23 +14,23 @@ module BuoyHelperMock
 		return data
 	end
 
-	def buoy_settings
+	def bumbleberry_settings
 		@@settings ||= {}
 		@@settings
 	end
 
-	def clear_buoy_settings!
+	def clear_bumbleberry_settings!
 		@@settings = {}
 	end
 
-	def set_buoy_settings(settings)
+	def set_bumbleberry_settings(settings)
 		@@settings ||= {}
 		@@settings.deep_merge!(settings)
 	end
 
 	def _init!
 		@@row_depth = nil
-		clear_buoy_settings!
+		clear_bumbleberry_settings!
 	end
 end
 
@@ -45,10 +45,10 @@ class RequestMock
 end
 
 RSpec.configure do |config|
-  config.include BuoyHelper
+  config.include BumbleberryHelper
 
   def init(test_object = nil)
-  	ActionView::Base.send :include, BuoyHelperMock
+  	ActionView::Base.send :include, BumbleberryHelperMock
   	@test_object = test_object || ActionView::Base.new
   	@test_object._init!
   	set({
@@ -64,7 +64,7 @@ RSpec.configure do |config|
   end
 
   def set(settings)
-  	@test_object.set_buoy_settings(settings)
+  	@test_object.set_bumbleberry_settings(settings)
   end
 
   def use(browser, version)

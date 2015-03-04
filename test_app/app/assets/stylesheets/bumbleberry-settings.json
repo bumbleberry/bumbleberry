@@ -1,0 +1,80 @@
+{
+    "stylesheets": ["application"],
+    "background-color": "#FAEBD7",
+    "breakpoint-unit": "px",
+    "unresponsive-width": 1000,
+    "row-width": 1000,
+    "total-columns": 12,
+    "platforms": {
+        "mobile": {
+            "range": [0,700]
+        },
+        "desktop": {
+            "range": [0,0]
+        }
+    },
+    "breakpoints": {
+        "small": {
+            "range": [0],
+            "grid": "y",
+            "offset": "n",
+            "reset-order": "n"
+        },
+        "medium": {
+            "range": [640],
+            "grid": "y",
+            "offset": "n",
+            "reset-order": "n"
+        },
+        "large": {
+            "range": [1024],
+            "grid": "y",
+            "offset": "n",
+            "reset-order": "n"
+        },
+        "small-only": {
+            "range": [0,319],
+            "grid": "n",
+            "offset": "n",
+            "reset-order": "n"
+        },
+        "medium-only": {
+            "range": [320,1023],
+            "grid": "n",
+            "offset": "n",
+            "reset-order": "n"
+        }
+    },
+    "grid-push": [1, 2],
+    "grid-pull": [1, 2],
+    "fonts": {
+        "primary": {
+            "name": "junction regular",
+            "location": "Junction",
+            "svg_id": "junction",
+            "ttf_type": "otf",
+            "fallback": ["Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif"]
+        },
+        "secondary": {
+            "name": "ChunkFive Roman",
+            "weight": "bold",
+            "location": "Chunkfive",
+            "svg_id": "chunkfive",
+            "ttf_type": "otf",
+            "fallback": ["Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", "sans-serif"]
+        }
+    },
+    "font-loading-method": "deferred",
+    "sprites": {
+        "origami-sprite": {
+            "origami-1": [0, 0, "182px", "149px"],
+            "origami-2": ["182px", 0, "136px", "149px"],
+            "origami-3": ["318px", 0, "150px", "149px"],
+            "origami-4": [0, "152px", "114px", "150px"],
+            "origami-5": ["114px", "152px", "162px", "148px"],
+            "origami-6": ["276px", "152px", "134px", "148px"],
+            "origami-7": ["410px", "152px", "193px", "148px"],
+            "origami-8": ["468px", 0, "168px", "149px"]
+        }
+    }
+}

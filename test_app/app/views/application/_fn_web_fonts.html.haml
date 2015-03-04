@@ -1,0 +1,32 @@
+=row do
+	=columns do
+		%p
+			For browsers that support svgs we can how these graphics in a variety of ways.
+=row do
+	=columns do
+		%h2='Inline SVGS'
+=row do
+	=columns({medium: 6}) do
+		%p
+			Browsers that support inline SVGs will see the an SVG image here. For other browsers, a fallback PNG will be displayed.
+	=columns({medium: 6}, {class: 'svg-preview'}) do
+		=svg('origami-1', 'An Origami Bird')
+=row do
+	=columns do
+		%h2='Embedded SVGS'
+=row do
+	=columns({medium: 6}, {class: 'svg-preview'}) do
+		=svg_image('origami-2', 'Another Origami Bird')
+	=columns({medium: 6}) do
+		%p
+			Browsers that support inline SVGs will see the an SVG image here. For other browsers, a fallback PNG will be displayed.
+=row do
+	=columns do
+		%h2='SVG Sprites'
+=row do
+	=columns({medium: 3}) do
+		%p
+			Browsers that support inline SVGs will see the an SVG image here. For other browsers, a fallback PNG or GIF will be displayed.
+	=columns({medium: 9}) do
+		- (1..8).each do |i|
+			.svg-preview.svg-sprite=svg_sprite('origami-sprite', "origami-#{i}", "Origami Bird ##{i}")

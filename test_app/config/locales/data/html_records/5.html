@@ -1,0 +1,75 @@
+<!DOCTYPE html><html class="example-page" lang="en"><head>
+<title>LinguaFranca TestApp</title>
+<link rel="stylesheet" media="all" href="http://fonts.googleapis.com/css?family=Open+Sans:400,800">
+<link rel="stylesheet" media="all" href="http://fonts.googleapis.com/css?family=Cutive+Mono">
+<link rel="stylesheet" media="all" href="/assets/application.css">
+<script src="/assets/application.js"></script>
+<meta content="en" http-equiv="content-language">
+
+</head>
+<body>
+
+
+<header>
+<div>
+<h1>
+<a href="/">
+<span class="translated-content" data-i18n-key="page_titles.site_name" data-i18n-needs-translation="1">site name</span>
+</a>
+</h1>
+<form class="edit_user" id="edit_user_1" action="/logout" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch"><strong>Username</strong>
+<span class="translated-content" data-i18n-key="forms.actions.user.logout" data-i18n-needs-translation="1"><input type="submit" name="commit" value="logout"></span>
+</form>
+<form name="toggle_translate_form" action="/translate" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓">
+<span class="translated-content" data-i18n-key="forms.actions.generic.start_translating" data-i18n-needs-translation="1"><input type="submit" name="start_translating" value="start translating"></span>
+</form>
+
+<form method="get" name="language_form">
+<label for="language"><span class="translated-content" data-i18n-key="forms.labels.select_language.language" data-i18n-needs-translation="1">language</span></label>
+<select name="language" id="language" scope="languages" onchange="changeLocale()"><option selected="selected" value="en">English</option></select>
+</form>
+</div>
+</header>
+<main>
+<h1><span class="translated-content" data-i18n-key="page_titles.translate.translate_post" data-i18n-needs-translation="1">Pellentesque Eget Nunc</span></h1>
+<form class="translate-post" id="edit_blog_2" action="/save_post" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch"><input type="hidden" value="2" name="blog[id]" id="blog_id">
+<header>
+<div class="attribute original">
+<h2><span class="translated-content" data-i18n-key="translate.content.original" data-i18n-needs-translation="1">original</span></h2>
+</div>
+<div class="attribute translated">
+<h2><span class="translated-content" data-i18n-key="translate.content.translation" data-i18n-needs-translation="1">translation</span></h2>
+</div>
+</header>
+<section class="title-attribute">
+<h3><span class="translated-content" data-i18n-key="content.attributes.posts.title" data-i18n-needs-translation="1">title</span></h3>
+<div class="attribute original" lang="fr">
+<h4>Mon premier blog</h4>
+</div>
+<div class="attribute translated">
+<span class="translated-content" data-i18n-key="forms.placeholders.blog.title" data-i18n-needs-translation="1"><input placeholder="title" type="text" value="Mon premier blog" name="blog[title]" id="blog_title"></span>
+</div>
+</section>
+<section class="content-attribute">
+<h3><span class="translated-content" data-i18n-key="content.attributes.posts.content" data-i18n-needs-translation="1">content</span></h3>
+<div class="attribute original" lang="fr">
+<p>Salut, bienvenue sur mon blog. Ici, je vais écrire toutes sortes de choses intéressantes.</p>
+</div>
+<div class="attribute translated">
+<textarea placeholder="content" name="blog[content]" id="blog_content">Salut, bienvenue sur mon blog. Ici, je vais écrire toutes sortes de choses intéressantes.</textarea>
+</div>
+</section>
+<footer><span class="translated-content" data-i18n-key="forms.actions.blog.update" data-i18n-needs-translation="1"><input type="submit" name="commit" value="update"></span></footer>
+</form>
+
+<script>
+  function changeLocale() {
+  	document.language_form.submit();
+  }
+  function toggleTranslate() {
+  	document.toggle_translate_form.submit();
+  }
+</script>
+</main>
+
+</body></html>
