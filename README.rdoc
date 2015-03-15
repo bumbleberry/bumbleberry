@@ -14,7 +14,7 @@ Capabilities are provided by the "Can I Use" API while Bumbleberry collects a li
 
 == Output
 
-Bumbleberry aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terriffic and should be used, even in while using Bumbleberry when necessary. {Do websites need to look exactly the same in every browser}[http://dowebsitesneedtolookexactlythesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five uear old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
+Bumbleberry aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terriffic and should be used, even in while using Bumbleberry when necessary. {Do websites need to look exactly the same in every browser}[http://dowebsitesneedtolookexactlythesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five year old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
 
 === CSS
 

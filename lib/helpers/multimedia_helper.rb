@@ -41,7 +41,7 @@ module BumbleberryMultimediaHelper
 				# otherwise append the filename
 				id_ref = image_path(filename + '.svg') + id_ref
 			end
-			output += '<svg class="sprite ' + filename + '"><use xlink:href="' + id_ref + '" /></svg>'
+			output += '<svg class="sprite ' + filename + ' ' + id + '"><use xlink:href="' + id_ref + '" /></svg>'
 			return output.html_safe
 		end
 		('<div class="sprite ' + filename + ' ' + id + '"></div>').html_safe
