@@ -3,5 +3,7 @@ $bumbleberry-no-markup: true;
 @import "bumbleberry";
 
 @each $font, $font-data in $fonts {
-	@include font($font);
+	@if map-get($font-data, auto_load) != 'n' {
+		@include font($font);
+	}
 }
