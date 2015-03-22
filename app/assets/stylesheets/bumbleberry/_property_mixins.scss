@@ -66,9 +66,9 @@
 		$name: map-get($font, name);
 		$location: map-get($font, location);
 		$svg_id: map-get($font, svg_id);
-		$ttf_type: map-get($font, ttf_type, ttf);
-		$weight: map-get($font, weight, normal);
-		$style: map-get($font, style, normal);
+		$ttf_type: get($font, ttf_type, ttf);
+		$weight: get($font, weight, normal);
+		$style: get($font, style, normal);
 		@include fontface($name, $location, $svg_id, $ttf_type, $weight, $style);
 	} @else {
 		@content;
@@ -83,7 +83,7 @@
 	@if has-font($font-key) {
 		$font: map-get($fonts, $font-key);
 		$name: map-get($font, name);
-		$fallback: map-get($font, fallback, ()) !default;
+		$fallback: get($font, fallback, ()) !default;
 		font-family: ('#{$name}', $fallback);
 	} @else {
 		@content;
