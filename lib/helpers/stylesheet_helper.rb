@@ -13,7 +13,7 @@ module BumbleberryStylesheetHelper
 		filename = get_stylesheet(filename)
 		output = ''
 		output += '<link href="' + (path_to_stylesheet filename) + '" rel="stylesheet" media="all" type="text/css" />'
-		if @first_stylsheet
+		if @@first_stylsheet
 			js = html5shiv
 			output += "<script>#{js}</script>" if js
 
