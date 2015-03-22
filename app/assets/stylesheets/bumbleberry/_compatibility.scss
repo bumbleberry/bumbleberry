@@ -98,3 +98,10 @@
 	}
 	@return '#{$selector}.last-child';
 }
+
+@function rems($rems) {
+	@if capable_of(rem) {
+		@return $rems * 1rem;
+	}
+	@return $rems * 16px;
+}
