@@ -32,7 +32,7 @@ module BumbleberryMultimediaHelper
 			if get_browser_info[:agent] == 'ie' && get_browser_info[:version].to_i < 12
 				# IE can't include a symbol from an external file, I'm assuming v12 will but we'll see
 				if !@svg_sprite_files.has_key?(filename) || @svg_sprite_files[filename].blank?
-					# include it if it hasn't already been doneso that we can reference it
+					# include it if it hasn't already been done so that we can reference it
 					svg_data = File.read(Rails.application.assets["#{filename}.svg"].pathname)
 					output += svg_data.gsub('<svg', '<svg hidden')
 					@svg_sprite_files[filename] = true
