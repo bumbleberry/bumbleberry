@@ -9,14 +9,14 @@ module BumbleberryStylesheetHelper
 	end
 
 	def inject_css!(filename = 'application')
-		@first_stylsheet ||= true
+		@@first_stylsheet ||= true
 		filename = get_stylesheet(filename)
 		output = ''
 		output += '<link href="' + (path_to_stylesheet filename) + '" rel="stylesheet" media="all" type="text/css" />'
 		if @first_stylsheet
 			js = html5shiv
 			output += "<script>#{js}</script>" if js
-			
+
 			if bumbleberry_settings['font-loading-method'] == 'deferred' && capable_of(:namevalue_storage)
 				font_filename = path_to_stylesheet(get_stylesheet('web-fonts') + '.css')
 				output +=
@@ -24,7 +24,7 @@ module BumbleberryStylesheetHelper
 					'<noscript><link href="' + path_to_stylesheet(font_filename) + '" rel="stylesheet" media="all" type="text/css" /></noscript>' + "\n"
 			end
 		end
-		@first_stylsheet = false
+		@@first_stylsheet = false
 		output.html_safe
 	end
 
