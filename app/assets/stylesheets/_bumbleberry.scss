@@ -1,3 +1,6 @@
+$browser: null !default;
+$browser-defined: ($browser != null);
+
 @import "bumbleberry/definitions";
 @import "bumbleberry/compatibility";
 @import "bumbleberry/conditionals";

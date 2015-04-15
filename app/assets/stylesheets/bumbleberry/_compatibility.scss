@@ -1,3 +1,4 @@
+$browser_capabilities: () !default;
 
 // gets the capability setting from the capability map
 // will return one of:
@@ -9,6 +10,9 @@
 //  u:  Unknown
 //  d:  Disabled by default
 @function get_capability($property) {
+	@if not $browser-defined {
+		@return n;
+	}
 	@if map-has-key($browser_capabilities, $property) {
 		@return map-get($browser_capabilities, $property);
 	}
@@ -38,14 +42,30 @@
 	@return "-#{$prefix}-#{$string}";
 }
 
+@function prefix($string, $capability) {
+	@if $capability == yx or $capability == ax {
+		@return prefix-string($browser_prefix, $string);
+	}
+	@return $string;
+}
+
+@function prefix-for($string, $capability-key) {
+	@return prefix($string, get_capability(map-get($compatibility-map, $capability-key)));
+}
+
+@function _calc($calcValue, $fallbackValue) {
+	@if capable_of(calc) {
+		@return calc(#{$calcValue});
+	} @elseif ($fallbackValue) {
+		@return $fallbackValue;
+	}
+}
+
 @mixin _($property, $value) {
 	$capability: get_capability(map-get($compatibility-map, $property));
 	
 	@if $capability == yx or $capability == ax or $capability == y or $capability == a {
-		@if $capability == yx or $capability == ax {
-			$property: prefix-string($browser_prefix, $property);
-		}
-		#{$property}: #{$value};
+		#{prefix($property, $capability)}: #{$value};
 	} @else {
 		@content;
 	}
@@ -104,4 +124,51 @@
 		@return $rems * 1rem;
 	}
 	@return $rems * 16px;
+}
+
+@mixin selection {
+	::#{prefix-for(selection, css-selection)} {
+		@content;
+	}
+}
+
+@mixin before {
+	$capability: get_capability(css-gencontent);
+	@if ($capability == 'y') {
+		&::before {
+			@content;
+		}
+	} @elseif ($capability == 'p') {
+		&:before {
+			@content;
+		}
+	}
+}
+
+@mixin after {
+	$capability: get_capability(css-gencontent);
+	@if ($capability == 'y') {
+		&::after {
+			@content;
+		}
+	} @elseif ($capability == 'p') {
+		&:after {
+			@content;
+		}
+	}
+}
+
+@mixin before-and-after {
+	$capability: get_capability(css-gencontent);
+	@if ($capability == 'y') {
+		&::before,
+		&::after {
+			@content;
+		}
+	} @elseif ($capability == 'p') {
+		&:before,
+		&:after {
+			@content;
+		}
+	}
 }

@@ -1,3 +1,5 @@
+$fonts: () !default;
+
 @mixin _fontface($font-name, $font-weight, $font-style) {
 	@font-face {
 		font-family: '#{$font-name}';
@@ -99,4 +101,21 @@
     background-image: #{$fn}linear-gradient(45deg, $colour-1 25%,  $colour-2 25%, $colour-2 75%, $colour-1 75%, $colour-1 100%), #{$fn}linear-gradient(45deg, $colour-1 25%,  $colour-2 25%,transparent 75%, $colour-1 75%, $colour-1 100%);
     @include _(background-size, #{($size * 2) ($size * 2)});
     background-position: 0 0, $size $size;
+}
+
+@mixin keyframes($name) {
+	@if capable_of(css-animation) {
+		$keyframes: prefix-for(keyframes, css-animation);
+		@if $keyframes == '-webkit-keyframes' {
+			@-webkit-keyframes #{$name} { @content; }
+		} @elseif $keyframes == '-moz-keyframes' {
+			@-moz-keyframes #{$name} { @content; }
+		} @elseif $keyframes == '-ms-keyframes' {
+			@-ms-keyframes #{$name} { @content; }
+		} @elseif $keyframes == '-o-keyframes' {
+			@-o-keyframes #{$name} { @content; }
+		} @else {
+			@keyframes #{$name} { @content; }
+		}
+	}
 }

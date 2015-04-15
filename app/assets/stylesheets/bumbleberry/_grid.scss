@@ -1,6 +1,11 @@
 $row-width: 1000px !default;
+$unresponsive-width: 1000px !default;
 $total-columns: 12 !default;
 $column-gutter: 30px !default;
+$breakpoint-unit: px !default;
+$grid-push: n !default;
+$grid-pull: n !default;
+$breakpoints: () !default;
 
 @if type-of($row-width) == number {
 	$row-width: $row-width#{$breakpoint-unit};
