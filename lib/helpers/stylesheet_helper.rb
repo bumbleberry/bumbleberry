@@ -17,7 +17,8 @@ module BumbleberryStylesheetHelper
 			js = html5shiv
 			output += "<script>#{js}</script>" if js
 
-			if bumbleberry_settings['font-loading-method'] == 'deferred' && capable_of(:namevalue_storage)
+			# load the font script if localStorage is available, don't do it in test though because it makes output unreadable
+			if bumbleberry_settings['font-loading-method'] == 'deferred' && capable_of(:namevalue_storage) && Rails.env != "test"
 				font_filename = path_to_stylesheet(get_stylesheet('web-fonts') + '.css')
 				output +=
 					'<script>' + (Bumbleberry::deferred_fonts_script).gsub('web-fonts.css', path_to_stylesheet(font_filename)) + '</script>' + "\n" + 
