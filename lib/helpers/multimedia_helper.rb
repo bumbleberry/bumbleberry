@@ -38,8 +38,8 @@ module BumbleberryMultimediaHelper
 					@svg_sprite_files[filename] = true
 				end
 			else
-				# otherwise append the filename
-				id_ref = image_path(filename + '.svg') + id_ref
+				# otherwise append the filename, stip off the domain to avoid x-origin errors in chrome
+				id_ref = image_path(filename + '.svg').gsub(/^https?:\/\/.*?\//, '/') + id_ref
 			end
 			output += '<svg class="sprite ' + filename + ' ' + id + '"><use xlink:href="' + id_ref + '" /></svg>'
 			return output.html_safe
