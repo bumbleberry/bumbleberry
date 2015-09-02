@@ -6,7 +6,7 @@ Bumbleberry is a GUI engine for Rails 4+. It uses browser sniffing to determine 
 
 == Browser Sniffing
 
-Yes, it's a {contentious issue}[http://css-tricks.com/browser-detection-is-bad/], but those that oppose it generally agree, it's reacting to the browser itself that should be avoided. What we should aim for instead is determining the browser's capablilities which is what Bumbleberry aims to do. It does the best it can to match the browser's user agent to browsers provided by the {Can I Use}[http://caniuse.com/] API call.
+Yes, it's a {contentious issue}[http://css-tricks.com/browser-detection-is-bad/], but those that oppose it generally agree, it's reacting to the browser itself that should be avoided. What we should aim for instead is determining the browser's capabilities which is what Bumbleberry aims to do. It does the best it can to match the browser's user agent to browsers provided by the {Can I Use}[http://caniuse.com/] API call.
 
 == Capabilities VS Bugs
 
@@ -14,7 +14,7 @@ Capabilities are provided by the "Can I Use" API while Bumbleberry collects a li
 
 == Output
 
-Bumbleberry aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terriffic and should be used, even in while using Bumbleberry when necessary. {Do websites need to look exactly the same in every browser}[http://dowebsitesneedtolookexactlythesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five year old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
+Bumbleberry aims to output as little as possible for each browser. Progressive enhancement and graceful degradation are terrific and should be used, even in while using Bumbleberry when necessary. {Do websites need to look exfactly the same in every browser}[http://dowebsitesneedtolookexactlyhtesameineverybrowser.com/]? No. The ultimate aim is that if a users requests a page with a five year old browser, respond with content that a responsible web developer would have given them at that time; if they request the page with a browser capable of all the latest technologies, take advantage if that and respond with a page as you would ideally design it now.
 
 === CSS
 

@@ -25,7 +25,7 @@ module BumbleberryMultimediaHelper
 	end
 
 	def svg_sprite(filename, id, alt)
-		if capable_of(:svg)
+		if capable_of(:svg) && Rails.env != 'test'
 			@svg_sprite_files ||= Hash.new
 			output = ''
 			id_ref = "##{id}"
@@ -44,6 +44,8 @@ module BumbleberryMultimediaHelper
 			output += '<svg class="sprite ' + filename + ' ' + id + '"><use xlink:href="' + id_ref + '" /></svg>'
 			return output.html_safe
 		end
-		('<div class="sprite ' + filename + ' ' + id + '"></div>').html_safe
+		return Rails.application.assets["#{id}.png"] ? 
+			"<img src=\"#{image_path(id + '.png')}\" class=\"sprite #{filename} #{id}\"/>".html_safe :
+			"<div class=\"sprite #{filename} #{id}\"></div>".html_safe
 	end
 end
