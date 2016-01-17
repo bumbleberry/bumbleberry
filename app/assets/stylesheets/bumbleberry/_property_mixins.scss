@@ -13,7 +13,7 @@ $fonts: () !default;
 	$url: false;
 	$format: false;
 	$can_embed: false;
-	$src: false;
+	$suffix: '';
 
 	@if capable_of(woff2) {
 		$url: '#{$file-name}.woff2';
@@ -33,22 +33,20 @@ $fonts: () !default;
 		}
 		$can_embed: true;
 	} @elseif capable_of(eot) {
-		//$src: '#{$file-name}.eot';
-		$url: '#{$file-name}.eot?#';
+		$url: '#{$file-name}.eot';
+		$suffix: '?#';
 		$format: 'eot';
 	} @elseif capable_of(svg-fonts) {
-		$url: '#{$file-name}.svg##{$svg_id}';
+		$url: '#{$file-name}.svg';
+		$suffix: '##{$svg_id}';
 		$format: 'svg';
 	}
 	@if $url {
 		@include _fontface($font-name, $font-weight, $font-style) {
-			@if supports(base64-fonts) and capable_of(datauri) and not has_bug(image-only-data-uris) {
+			@if supports(base64-fonts) and capable_of(datauri) and not has_bug(image-only-data-uris) and not has_bug(broken-base64-woff2) {
 				src: asset-data-url($url) format('#{$format}');
 			} @else {
-				@if $src {
-					src: url(asset-path($src));
-				}
-				src: url(asset-path($url)) format('#{$format}');
+				src: url(asset-path($url)#{$suffix}) format('#{$format}');
 			}
 		}
 	}

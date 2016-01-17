@@ -1,3 +1,5 @@
+$bumbleberry-no-markup: false !default;
+
 @if not $bumbleberry-no-markup {
 	@if not capable_of(svg) {
 		@each $sprite-name, $sprite in $sprites {

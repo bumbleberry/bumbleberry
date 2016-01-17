@@ -172,7 +172,8 @@ module Bumbleberry
 	def self.update!
 		settings = self.settings
 
-		if settings['font-loading-method'] == 'deferred'
+		# if we are using a font loading method that requires external webfont css, include it
+		if ['deferred', 'http2'].include?(settings['font-loading-method'])
 			settings['stylesheets'] << 'web-fonts'
 		end
 
@@ -181,9 +182,13 @@ module Bumbleberry
 
 		settings['stylesheets'].each { | path |
 			if !(/^_.*/.match(path))
+				directory = File.join(Dir.pwd, 'app', 'assets', 'stylesheets', path.gsub(/(\.css)?(\.s[ac]ss)?/, ''))
+				FileUtils.mkdir_p(directory) # make the directory if it doesn't exist
+				FileUtils.rm_rf(File.join(directory, '*.scss'), secure: true) # empty the directory
+
 				caniuse['agents'].each_pair { | agent, agent_data |
 					agent_data['versions'].each { | version |
-						if (version)
+						if version
 							prefix = agent_data['prefix']
 							if (agent_data.has_key?('prefix_exceptions') && agent_data['prefix_exceptions'].has_key?(version))
 								prefix = agent_data['prefix_exceptions'][version]
@@ -203,7 +208,7 @@ module Bumbleberry
 							scss = template.
 								gsub(self.template_var('browser'), agent).
 								gsub(self.template_var('browser_prefix'), prefix).
-								gsub(self.template_var('browser_version'), version).
+								gsub(self.template_var('browser_version'), self.get_numeric_version(version)).
 								gsub(self.template_var('browser_type'), agent_data['type']).
 								gsub(self.template_var('browser_abbr'), agent_data['abbr']).
 								gsub(self.template_var('browser_name'), agent_data['browser']).
@@ -212,15 +217,16 @@ module Bumbleberry
 								gsub(self.template_var('path'), path == 'web-fonts' ? path : "../#{path}").
 								gsub(self.template_var('bumbleberry-no-markup'), path == 'web-fonts' ? "\n$bumbleberry-no-markup: true;" : '')
 
-							file = File.join(Dir.pwd, 'app', 'assets', 'stylesheets', path.gsub(/(\.css)?(\.s[ac]ss)?/, ''))
-							FileUtils.mkdir_p(file)
-
-							File.open(File.join(file, filename), 'w') { |f| f.write(scss) }
+							File.open(File.join(directory, filename), 'w') { |f| f.write(scss) }
 						end
 					}
 				}
 			end
 		}
+	end
+
+	def self.get_numeric_version(version)
+		return version.to_f.to_s
 	end
 
 	def self.template_var(var)
