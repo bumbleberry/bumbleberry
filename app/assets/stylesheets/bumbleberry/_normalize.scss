@@ -5,7 +5,6 @@
 
 @if not $bumbleberry-no-markup {
 	@if $font-loading-method == "all" or not does(namevalue-storage) {
-		body:before {content: '#{$font-loading-method}';}
 		@each $font, $font-data in $fonts {
 			@if map-get($font-data, auto_load) != 'n' {
 				@include font($font);

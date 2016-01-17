@@ -6,9 +6,10 @@ $breakpoint-unit: px !default;
 $grid-push: n !default;
 $grid-pull: n !default;
 $breakpoints: () !default;
+$bumbleberry-no-markup: false !default;
 
 @if type-of($row-width) == number {
-	$row-width: $row-width#{$breakpoint-unit};
+	$row-width: unquote("#{$row-width}#{$breakpoint-unit}");
 }
 
 $default-float: left !default;
