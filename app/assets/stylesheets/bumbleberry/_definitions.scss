@@ -320,7 +320,7 @@ $bug-list: map-merge((
 	"table-border": all,
 	"image-only-data-uris": (ie: 8),
 	"svg-external-symbols": (ie: (0, 11)),
-	"broken-base64-woff2": (chrome: (0, 50))
+	"broken-base64-woff2": (chrome: (0, 50), and_chr: (0, 50))
 ), $bug-list);
 
 $secondary-font-selectors: ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'label', 'th') !default;
