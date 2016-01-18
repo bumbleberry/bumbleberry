@@ -184,7 +184,7 @@ module Bumbleberry
 			if !(/^_.*/.match(path))
 				directory = File.join(Dir.pwd, 'app', 'assets', 'stylesheets', path.gsub(/(\.css)?(\.s[ac]ss)?/, ''))
 				FileUtils.mkdir_p(directory) # make the directory if it doesn't exist
-				FileUtils.rm_rf(File.join(directory, '*.scss'), secure: true) # empty the directory
+				FileUtils.rm_rf(Dir.glob(File.join(directory, '*.scss'))) # empty the directory
 
 				caniuse['agents'].each_pair { | agent, agent_data |
 					agent_data['versions'].each { | version |
