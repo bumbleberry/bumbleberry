@@ -11,4 +11,6 @@ Gemfile.lock
 test_app/tmp
 test_app/app/assets/stylesheets/application/*
 test_app/app/assets/stylesheets/web-fonts/*
+test_app/db/*
+test_app/log/*
 .sass-cache

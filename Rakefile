@@ -8,10 +8,10 @@ rescue LoadError
 end
 
 Rake::TestTask.new do |t|
-  t.libs << 'test'
+  #t.libs << 'test'
 end
 
-task :default => :test
+#task :default => :test
 #
 #require 'rdoc/task'
 #
