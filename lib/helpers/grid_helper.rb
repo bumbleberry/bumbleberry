@@ -9,12 +9,15 @@ module BumbleberryGridHelper
 		@@row_depth ||= 0
 		@@row_depth += 1
 		content = ''
-		options = {:class => 'row'}
+		options ||= {}
+		options[:class] ||= []
+		options[:class] = [options[:class]] if options[:class].is_a?(String)
+		options[:class] << 'row'
 		@@columns ||= {}
 		@@columns[@@row_depth] = {:depth => 0, :width => 0}
 		@@can_make_columns = true
 
-		tag = :div
+		tag = options[:tag] || :div
 
 		content = capture(&block)
 
@@ -63,7 +66,7 @@ module BumbleberryGridHelper
 
 		options.each { | size, width |
 			size = _to_string(size)
-			if /^(push|pull)$/.match(size)
+			if ['push', 'pull'].include?(size)
 				if !render_as_table
 					if width.is_a?(Numeric)
 						width = {:default => width}
@@ -80,6 +83,18 @@ module BumbleberryGridHelper
 						attributes[:class] << "#{sz}#{size}-#{w.to_s}"
 					}
 				end
+			elsif ['end'].include?(size.to_s)
+				attributes[:class] << size if width
+			elsif size.to_s == 'id'
+				attributes[:id] ||= width
+			elsif size.to_s == 'tag'
+				tag = width
+			elsif size.to_s == 'class'
+				if width.is_a?(Array)
+					attributes[:class] += width
+				else
+					attributes[:class] << width.to_s
+				end 
 			else
 				_check_breakpoint(size)
 				_check_column_width(width)

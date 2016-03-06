@@ -10,6 +10,7 @@ require "action_view"
 require "helpers/grid_helper"
 require "helpers/multimedia_helper"
 require "helpers/stylesheet_helper"
+require "helpers/sass_extensions"
 
 module BumbleberryHelper
 	include BumbleberryGridHelper
