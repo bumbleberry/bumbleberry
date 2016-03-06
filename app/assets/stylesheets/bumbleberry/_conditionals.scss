@@ -32,12 +32,12 @@
 	}
 }
 
-@mixin breakpoint($point1, $point2: 0) {
+@function breakpoint-to-unit($point) {
 	$min: 0;
 	$max: 0;
-
-	@if map-has-key($breakpoints, $point1) {
-		$bp: map-get(map-get($breakpoints, $point1), 'range');
+	
+	@if map-has-key($breakpoints, $point) {
+		$bp: map-get(map-get($breakpoints, $point), 'range');
 		
 		$min: nth($bp, 1);
 		@if length($bp) > 1 {
@@ -45,12 +45,31 @@
 			$min: nth($bp, 1);
 		}
 	} @else {
-		$min: $point1;
-		
+		@return false;
+	}
+	@return ($min, $max);
+}
+
+@mixin breakpoint($point1, $point2: 0) {
+	$min: 0;
+	$max: 0;
+	$points1: breakpoint-to-unit($point1);
+	$points2: breakpoint-to-unit($point2);
+	
+	@if $points1 == false {
+		$points1: (0, $point1);
+	}
+
+	@if $points2 == false {
 		@if $point2 > 0 {
-			$max: $point2;
+			$points2: ($point2, $point2);
+		} @else {
+			$points2: (0, 0);
 		}
 	}
+
+	$min: nth($points1, 1);
+	$max: nth($points2, 1);
 
 	@if capable_of(css-mediaqueries) {
 		$query-string: '';
@@ -68,9 +87,9 @@
 					$query-string: '#{$query-string} and';
 				}
 			}
-			
+
 			@if $max > 0 {
-				$query-string: '#{$query-string} (max-width: #{$max}#{$breakpoint-unit})';
+				$query-string: '#{$query-string} (max-width: #{$max - 0.1}#{$breakpoint-unit})';
 			}
 			
 			@if str-length($query-string) > 0 {
