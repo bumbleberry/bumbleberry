@@ -47,28 +47,28 @@ module Bumbleberry
 
 		if (match = /UC(\s?Browser|WEB)\/?(\d+)?(\.\d+)?/.match(user_agent))
 			info[:agent] = 'and_uc'
-			info[:version] = self.match_version("#{match[2]}#{match[3]}".to_f, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version("#{match[2]}#{match[3]}".to_f, caniuse['agents'][info[:agent]])
 		elsif /(AppleWebKit)?.*(?<!like\s)(iPhone|iPad).*(AppleWebKit)?/i.match(user_agent)
 			info[:agent] = 'ios_saf'
 			if (match = /Opera\s*Mini\/(\d+)(\.\d+)?/i.match(user_agent))
 				info[:agent] = 'op_mini'
-				info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]]['versions'])
+				info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]])
 			elsif !(/(Chrome|Opera)/i.match(user_agent)) && (match = /Version\/(\d+)(\.\d+)?/.match(user_agent))
-				info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]]['versions'])
+				info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]])
 			else
-				info[:version] = self.match_version(self.webkit_convert(user_agent.gsub(/^.*AppleWebKit\/(\d+)(\.\d+)?.*$/, '\1\2').to_f), caniuse['agents'][info[:agent]]['versions'])
+				info[:version] = self.match_version(self.webkit_convert(user_agent.gsub(/^.*AppleWebKit\/(\d+)(\.\d+)?.*$/, '\1\2').to_f), caniuse['agents'][info[:agent]])
 			end
 		elsif match = /AppleWebKit?.*Safari.*Edge\/(\d+)(\.\d+)?/i.match(user_agent)
 			info[:agent] = 'edge'
-			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]])
 		elsif (match = /Opera\/.*Version\/(\d+)(\.\d+)?/.match(user_agent)) ||
 		  (match = /Opera[\s\/](\d+)(\.\d+)?/.match(user_agent)) ||
 		  (match = /Opera/.match(user_agent))
 			info[:agent] = (/Opera\s*Mini/.match(user_agent) ? 'op_mini' : (/Opera\s*Mobi/.match(user_agent) ? 'op_mob' : 'opera'))
-			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]])
 		elsif (match = /IEMobile[\/\s](\d+)(\.\d+)?/.match(user_agent))
 			info[:agent] = 'ie_mob'
-			info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]])
 		elsif (match = /MSIE ([\w\.]+)/.match(user_agent)) || (match = /Internet Explorer (\d+)/.match(user_agent)) || (match = /rv:([\d\.]+).*like\s*Gecko\s*$/.match(user_agent)) || (match = /Edge\/([\w\.]+)/.match(user_agent))
 			info[:agent] = 'ie'
 			version = match[1]
@@ -82,7 +82,7 @@ module Bumbleberry
 			elsif version == 6 && /MSIE 5\.5/.match(user_agent)
 				info[:version] = '5.5'
 			else
-				info[:version] = self.match_version(version, caniuse['agents'][info[:agent]]['versions'])
+				info[:version] = self.match_version(version, caniuse['agents'][info[:agent]])
 			end
 		elsif (match = /Firefox.*?(\d+)(\.\d+)/i.match(user_agent)) || (match = /Firefox$/.match(user_agent))
 			if (/(Android|iPhone|iPad)/.match(user_agent)) && match[1].to_f > 20 # FF for IOS doesn't exist yet but if it does, we'll treat it as android until we update the code
@@ -90,7 +90,7 @@ module Bumbleberry
 			else
 				info[:agent] = 'firefox'
 			end
-			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 1, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 1, caniuse['agents'][info[:agent]])
 		elsif (match = /Chrome\/((\d+)(\.\d+)?)?/.match(user_agent))
 			if (/(iPhone|iPad)/.match(user_agent))
 				info[:agent] = 'and_chr'
@@ -99,22 +99,22 @@ module Bumbleberry
 			else
 				info[:agent] = 'chrome'
 			end
-			info[:version] = self.match_version(match[1].to_f, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(match[1].to_f, caniuse['agents'][info[:agent]])
 		elsif /(BlackBerry\s?\d{4}|BB\d\d;\s*(Kbd|Touch))/.match(user_agent)
 			info[:agent] = 'bb'
 			match = /(Version\/|BB)(\d+)(\.\d+)?/.match(user_agent)
-			info[:version] = self.match_version(match ? "#{match[2]}#{match[3]}".to_f : 0, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(match ? "#{match[2]}#{match[3]}".to_f : 0, caniuse['agents'][info[:agent]])
 		elsif (match = /Android\s*(\d+)(\.\d+)?/.match(user_agent))
 			info[:agent] = 'android'
-			info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version("#{match[1]}#{match[2]}".to_f, caniuse['agents'][info[:agent]])
 		elsif (match = /Version\/(\d+)(\.\d+)?(\.\d+)?(\w+)?(\sMobile\/\w+)?\s+Safari/.match(user_agent)) ||
 		  (match = /Version\/(\d+)(\.\d+)?(\.\d+)?(\w+)?\siPhone/.match(user_agent)) ||
 		  (match = /Macintosh; U; PPC Mac OS/.match(user_agent)) || (match = /Mobile Safari/.match(user_agent))
 			info[:agent] = 'safari'
-			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]])
 		elsif (match = /AppleWebKit\/(\d+)(\.\d+)?/.match(user_agent))
 			info[:agent] = 'safari'
-			info[:version] = self.match_version(self.webkit_convert("#{match[1]}#{match[2]}".to_f), caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(self.webkit_convert("#{match[1]}#{match[2]}".to_f), caniuse['agents'][info[:agent]])
 		end
 
 		if !info[:agent]
@@ -122,25 +122,26 @@ module Bumbleberry
 		end
 		
 		if !info[:version]
-			info[:version] = self.match_version(0, caniuse['agents'][info[:agent]]['versions'])
+			info[:version] = self.match_version(0, caniuse['agents'][info[:agent]])
 		end
 
 		return info
 	end
 
-	def self.match_version(version, all_versions)
+	def self.match_version(version, agent_info)
 		best_match = nil
 		smallest = nil
 
 		best_match_s = nil
 		smallest_s = nil
-		all_versions.each { | this_version |
+		agent_info['version_list'].each { | version_info |
+			this_version = version_info['version']
 			if this_version
 				this_version_s = this_version
 
 				if /^\d+(\.\d+)?(\-\d+(\.\d+))?$/.match(this_version)
 					this_version = this_version.to_f
-					if !smallest || smallest >= this_version
+					if smallest.nil? || smallest >= this_version
 						smallest = this_version
 						smallest_s = this_version_s
 					end
