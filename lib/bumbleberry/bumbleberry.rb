@@ -4,11 +4,25 @@ module Bumbleberry
 
 	def self.get_caniuse_data
 		datafile = File.join(File.expand_path('../..', __FILE__), 'caniuse.json')
-		if !File.exist?(datafile) || File.mtime(datafile) < (Time.now - 604800) # file doesnt exist or is more than a week old
-			json = Net::HTTP.get('caniuse.com', '/jsonp.php').gsub(/^\s*\(\s*(.*)\s*\)\s*$/, '\1')
-			File.open(datafile, 'w') { |f| f.write(json) }
+		puts "Looking for cached caniuse json data..."
+		data = '{}'
+		if File.exist?(datafile) && File.mtime(datafile) > (Time.now - 604800)
+			puts "A recent cached version was found"
+			data = File.read(datafile)
+		else # file doesnt exist or is more than a week old
+			github_url = "https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json"
+			puts "Downloading data from #{github_url}"
+
+			github_data = false
+			begin
+				github_data = open(github_url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
+			rescue
+				puts "Error downloading data from github"
+			end
+			data = github_data.read
+			File.open(datafile, 'w') { |f| f.write(data) }
 		end
-		JSON.parse(File.read(datafile))
+		JSON.parse(data)
 	end
 
 	def self.webkit_convert(webkit_version, browser = 'safari')
@@ -44,6 +58,9 @@ module Bumbleberry
 			else
 				info[:version] = self.match_version(self.webkit_convert(user_agent.gsub(/^.*AppleWebKit\/(\d+)(\.\d+)?.*$/, '\1\2').to_f), caniuse['agents'][info[:agent]]['versions'])
 			end
+		elsif match = /AppleWebKit?.*Safari.*Edge\/(\d+)(\.\d+)?/i.match(user_agent)
+			info[:agent] = 'edge'
+			info[:version] = self.match_version(match[1] ? "#{match[1]}#{match[2]}".to_f : 0, caniuse['agents'][info[:agent]]['versions'])
 		elsif (match = /Opera\/.*Version\/(\d+)(\.\d+)?/.match(user_agent)) ||
 		  (match = /Opera[\s\/](\d+)(\.\d+)?/.match(user_agent)) ||
 		  (match = /Opera/.match(user_agent))
@@ -187,7 +204,10 @@ module Bumbleberry
 				FileUtils.rm_rf(Dir.glob(File.join(directory, '*.scss'))) # empty the directory
 
 				caniuse['agents'].each_pair { | agent, agent_data |
-					agent_data['versions'].each { | version |
+					puts "Parsing data for #{agent_data['browser']}..."
+					agent_data['version_list'].each { | version_info |
+						version = version_info['version']
+						puts " - #{agent} version #{version}"
 						if version
 							prefix = agent_data['prefix']
 							if (agent_data.has_key?('prefix_exceptions') && agent_data['prefix_exceptions'].has_key?(version))

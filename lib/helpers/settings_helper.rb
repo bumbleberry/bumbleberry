@@ -8,7 +8,7 @@ module BumbleberrySettingsHelper
 	end
 
 	def get_caniuse_data()
-		return cache_retrieve(:caniuse_data) || cache(:caniuse_data, Bumbleberry::get_caniuse_data)
+		return Bumbleberry::get_caniuse_data
 	end
 
 	def get_browser_info()
