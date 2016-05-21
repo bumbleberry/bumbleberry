@@ -4,9 +4,11 @@ module BumbleberryCompatibilityHelper
 	include BumbleberrySettingsHelper
 
 	def get_capability(capability)
-		info = get_browser_info
-		caniuse = get_caniuse_data
-		return caniuse['data'][capability.to_s.gsub('_', '-')]['stats'][info[:agent]][info[:version]]
+		return _profile("get_capability #{capability}") do
+			info = get_browser_info
+			caniuse = get_caniuse_data
+			caniuse['data'][capability.to_s.gsub('_', '-')]['stats'][info[:agent]][info[:version]]
+		end
 	end
 
 	def capable_of(capability)
@@ -15,7 +17,7 @@ module BumbleberryCompatibilityHelper
 	end
 
 	def html5shiv
-		if !capable_of(:html5semantic)
+		unless capable_of(:html5semantic)
 			js = Array.new
 			js << 'var d=document'
 			html5elements = [:article, :aside, :details, :figcaption, :figure, :footer, :header, :main, :mark, :nav, :section, :summary, :time]

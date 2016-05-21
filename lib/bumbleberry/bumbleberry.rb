@@ -3,26 +3,29 @@ require 'net/http'
 module Bumbleberry
 
 	def self.get_caniuse_data
-		datafile = File.join(File.expand_path('../..', __FILE__), 'caniuse.json')
-		puts "Looking for cached caniuse json data..."
-		data = '{}'
-		if File.exist?(datafile) && File.mtime(datafile) > (Time.now - 604800)
-			puts "A recent cached version was found"
-			data = File.read(datafile)
-		else # file doesnt exist or is more than a week old
-			github_url = "https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json"
-			puts "Downloading data from #{github_url}"
+		unless @_caniuse_data
+			datafile = File.join(File.expand_path('../..', __FILE__), 'caniuse.json')
+			puts "Looking for cached caniuse json data..."
+			data = '{}'
+			if File.exist?(datafile) && File.mtime(datafile) > (Time.now - 604800)
+				puts "A recent cached version was found"
+				data = File.read(datafile)
+			else # file doesnt exist or is more than a week old
+				github_url = "https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json"
+				puts "Downloading data from #{github_url}"
 
-			github_data = false
-			begin
-				github_data = open(github_url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
-			rescue
-				puts "Error downloading data from github"
+				github_data = false
+				begin
+					github_data = open(github_url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
+				rescue
+					puts "Error downloading data from github"
+				end
+				data = github_data.read
+				File.open(datafile, 'w') { |f| f.write(data) }
 			end
-			data = github_data.read
-			File.open(datafile, 'w') { |f| f.write(data) }
+			@_caniuse_data = JSON.parse(data)
 		end
-		JSON.parse(data)
+		@_caniuse_data
 	end
 
 	def self.webkit_convert(webkit_version, browser = 'safari')
@@ -41,9 +44,8 @@ module Bumbleberry
 	end
 
 	def self.detect(user_agent, caniuse_data = nil)
-		caniuse = caniuse_data# || self.get_caniuse_data
-
 		info = {:agent => nil, :version => nil}
+		caniuse = caniuse_data
 
 		if (match = /UC(\s?Browser|WEB)\/?(\d+)?(\.\d+)?/.match(user_agent))
 			info[:agent] = 'and_uc'
@@ -117,15 +119,10 @@ module Bumbleberry
 			info[:version] = self.match_version(self.webkit_convert("#{match[1]}#{match[2]}".to_f), caniuse['agents'][info[:agent]])
 		end
 
-		if !info[:agent]
-			info[:agent] = 'safari'
-		end
+		info[:agent] = 'safari' unless info[:agent]
+		info[:version] = self.match_version(0, caniuse['agents'][info[:agent]]) unless info[:version]
 		
-		if !info[:version]
-			info[:version] = self.match_version(0, caniuse['agents'][info[:agent]])
-		end
-
-		return info
+		info
 	end
 
 	def self.match_version(version, agent_info)
@@ -163,37 +160,36 @@ module Bumbleberry
 			end
 		}
 
-		return best_match_s || smallest_s
+		best_match_s || smallest_s
 	end
 	
 	def self.settings
 		file = File.join(Dir.pwd, 'app', 'assets', 'stylesheets', 'bumbleberry-settings.json')
+		json = nil
 		if File.exist?(file)
 			# we've already got it installed so return the data
-			return JSON.parse(File.read(file))
-		end
+			json = File.read(file)
+		else
+			# make sure we have the scss settings file
+			scss_settings = File.join(Dir.pwd, 'app', 'assets', 'stylesheets', '_bumbleberry-settings.scss')
+			unless File.exist?(scss_settings)
+				File.open(scss_settings, 'w') { |f| f.write(File.read(File.join(File.expand_path('../../..', __FILE__), 'app/assets/stylesheets/_bumbleberry-settings.scss'))) }
+			end
 
-		# make sure we have the scss settings file
-		scss_settings = File.join(Dir.pwd, 'app', 'assets', 'stylesheets', '_bumbleberry-settings.scss')
-		if !File.exist?(scss_settings)
-			File.open(scss_settings, 'w') { |f| f.write(File.read(File.join(File.expand_path('../../..', __FILE__), 'app/assets/stylesheets/_bumbleberry-settings.scss'))) }
+			# now copy over the default settings
+			json = File.read(File.join(File.expand_path('../../..', __FILE__), 'app/assets/stylesheets/bumbleberry-settings.json'))
+			File.open(file, 'w') { |f| f.write(json) }
 		end
-
-		# now copy over the default settings
-		default_json = File.read(File.join(File.expand_path('../../..', __FILE__), 'app/assets/stylesheets/bumbleberry-settings.json'))
-		File.open(file, 'w') { |f| f.write(default_json) }
 
 		# and return it
-		JSON.parse(default_json)
+		JSON.parse(json)
 	end
 
 	def self.update!
 		settings = self.settings
 
 		# if we are using a font loading method that requires external webfont css, include it
-		if ['deferred', 'http2'].include?(settings['font-loading-method'])
-			settings['stylesheets'] << 'web-fonts'
-		end
+		settings['stylesheets'] << 'web-fonts' if ['deferred', 'http2'].include?(settings['font-loading-method'])
 
 		caniuse = self.get_caniuse_data
 		template = File.read(File.join(File.expand_path('../..', __FILE__), 'template.scss'))
@@ -269,5 +265,14 @@ module Bumbleberry
 			:web_fonts => {:name => 'Web Fonts', :description => 'Load only one font and caches if possible'},
 			:grid => {:name => 'Grid Layout', :description => 'A grid layout with table fallback'}
 		}
+	end
+
+	def self._profile(name, &block)
+		if defined? Rack::MiniProfiler
+			puts " ==== Profiling: #{name} ==== "
+			return Rack::MiniProfiler.step(name, &block)
+		end
+
+		yield
 	end
 end
