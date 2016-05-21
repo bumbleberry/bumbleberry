@@ -4,7 +4,7 @@ basedir = File.join(Dir.pwd, 'app', 'assets', 'stylesheets')
 
 # precompile all scss files for each bumbleberry file
 precompile = Array.new
-(Bumbleberry::settings['precompile'][Rails.env] || {}).each do |k,v|
+((Bumbleberry::settings['precompile'] || {})[Rails.env] || {}).each do |k,v|
 	v.each do |version|
 		precompile << "#{k}-#{version}"
 	end
