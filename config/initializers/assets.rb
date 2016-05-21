@@ -3,8 +3,21 @@ require 'bumbleberry/bumbleberry'
 basedir = File.join(Dir.pwd, 'app', 'assets', 'stylesheets')
 
 # precompile all scss files for each bumbleberry file
-Rails.application.config.assets.precompile += [File.join('web-fonts', "*.css")]
-Bumbleberry::settings['stylesheets'].each { | path |
-	#Rails.application.config.assets.precompile += [File.join(basedir, path, "*.css")]
-	Rails.application.config.assets.precompile += [File.join(path, "*.css")]
-}
+precompile = Array.new
+(Bumbleberry::settings['precompile'][Rails.env] || {}).each do |k,v|
+	v.each do |version|
+		precompile << "#{k}-#{version}"
+	end
+end
+
+precompile << '*' if precompile.empty?
+
+precompile.each do |p|
+	Rails.application.config.assets.precompile << File.join('web-fonts', "#{p}.css")
+end
+
+Bumbleberry::settings['stylesheets'].each do | path |
+	precompile.each do |p|
+		Rails.application.config.assets.precompile << File.join(path, "#{p}.css")
+	end
+end
