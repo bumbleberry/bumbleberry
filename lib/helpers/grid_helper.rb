@@ -18,6 +18,7 @@ module BumbleberryGridHelper
 		@@can_make_columns = true
 
 		tag = options[:tag] || :div
+		options.delete(:tag)
 
 		content = capture(&block)
 
