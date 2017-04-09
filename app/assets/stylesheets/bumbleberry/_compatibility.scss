@@ -20,10 +20,10 @@ $browser_capabilities: () !default;
 }
 
 // return true if the browser can use this property or method
-@function capable_of($property) {
+@function capable_of($property, $strict: false) {
 	$capability: get_capability(map-get($compatibility-map, $property));
 	$capability: str-slice($capability, 0, 1);
-	@return $capability == y or $capability == a;
+	@return $capability == y or (not $strict and $capability == a);
 }
 
 // return false if the user has opted out of including some css

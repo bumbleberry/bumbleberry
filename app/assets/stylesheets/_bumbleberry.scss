@@ -1,10 +1,6 @@
 $browser: null !default;
 $browser-defined: ($browser != null);
 
-/*
-bumb--
-*/
-
 @import "bumbleberry/definitions";
 @import "bumbleberry/compatibility";
 @import "bumbleberry/conditionals";
