@@ -1,25 +1,28 @@
 require 'net/http'
 
 module Bumbleberry
+  def self.log(str)
+    puts str unless ENV['RAILS_ENV'] == 'test'
+  end
 
   def self.get_caniuse_data
     return @_caniuse_data if @_caniuse_data
     
     datafile = File.join(File.expand_path('../..', __FILE__), 'caniuse.json')
-    puts "Looking for cached caniuse json data..."
+    log "Looking for cached caniuse json data..."
     data = '{}'
     if File.exist?(datafile) && File.mtime(datafile) > (Time.now - 604800)
-      puts "A recent cached version was found"
+      log "A recent cached version was found"
       data = File.read(datafile)
     else # file doesnt exist or is more than a week old
       github_url = "https://raw.githubusercontent.com/Fyrd/caniuse/master/fulldata-json/data-2.0.json"
-      puts "Downloading data from #{github_url}"
+      log "Downloading data from #{github_url}"
 
       github_data = false
       begin
         github_data = open(github_url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE})
       rescue
-        puts "Error downloading data from github"
+        log "Error downloading data from github"
       end
       data = github_data.read
       File.open(datafile, 'w') { |f| f.write(data) }
@@ -207,10 +210,10 @@ module Bumbleberry
         FileUtils.rm_rf(Dir.glob(File.join(directory, '*.scss'))) # empty the directory
 
         caniuse['agents'].each_pair { | agent, agent_data |
-          puts "Parsing data for #{agent_data['browser']}..."
+          log "Parsing data for #{agent_data['browser']}..."
           agent_data['version_list'].each { | version_info |
             version = version_info['version']
-            puts " - #{agent} version #{version}"
+            log " - #{agent} version #{version}"
             if version
               prefix = agent_data['prefix']
               if (agent_data.has_key?('prefix_exceptions') && agent_data['prefix_exceptions'].has_key?(version))
