@@ -46,7 +46,7 @@ $fonts: () !default;
 			@if supports(base64-fonts) and capable_of(datauri) and not has_bug(image-only-data-uris) and not has_bug(broken-base64-woff2) {
 				src: asset-data-url($url) format('#{$format}');
 			} @else {
-				src: url(quote(unquote(asset-path($url))#{$suffix})) format('#{$format}');
+				src: url("#{unquote(asset-path($url))}#{$suffix})}") format('#{$format}');
 			}
 		}
 	}
