@@ -221,12 +221,12 @@ $last-child-float: $opposite-direction !default;
     }
 
     // Fighting [class*="column"] + [class*="column"]:last-child
-    .columns.#{$size}-centered#{last-child()} {
+    .columns.#{$size}-centered:last-child {
       float: none;
     }
 
     // Fighting .column.<previous-size>-centered:last-child
-    .columns.#{$size}-uncentered#{last-child()} {
+    .columns.#{$size}-uncentered:last-child {
       float: $default-float;
     }
 
@@ -269,10 +269,10 @@ $last-child-float: $opposite-direction !default;
   }
 
   @if capable-of(css-sel2) {
-    [class*="column"] + [class*="column"]#{last-child()} { float: $last-child-float; }
+    [class*="column"] + [class*="column"]:last-child { float: $last-child-float; }
     [class*="column"] + [class*="column"].end { float: $default-float; }
   } @else {
-    column.middle#{last-child()} { float: $last-child-float; }
+    column.middle:last-child { float: $last-child-float; }
     column.middle.end { float: $default-float; }
   }
 
