@@ -3,6 +3,8 @@
 //  https://github.com/necolas/normalize.css/
 //
 
+$font-loading-method: "all" !default;
+
 @if not $bumbleberry-no-markup {
 	@if $font-loading-method == "all" or not does(namevalue-storage) {
 		@each $font, $font-data in $fonts {

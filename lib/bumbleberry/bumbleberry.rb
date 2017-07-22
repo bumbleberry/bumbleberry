@@ -48,7 +48,7 @@ module Bumbleberry
   def self.detect(user_agent, caniuse_data = nil)
     caniuse = caniuse_data# || self.get_caniuse_data
 
-    info = {:agent => nil, :version => nil}
+    info = {agent: nil, version: nil}
 
     if (match = /UC(\s?Browser|WEB)\/?(\d+)?(\.\d+)?/.match(user_agent))
       info[:agent] = 'and_uc'
@@ -270,9 +270,9 @@ module Bumbleberry
   # a list of things that bumbleberry does
   def self.bumbleberry_functions
     {
-      :svgs => {:name => 'Vector Graphics', :description => 'SVG graphics with fallbacks'},
-      :web_fonts => {:name => 'Web Fonts', :description => 'Load only one font and caches if possible'},
-      :grid => {:name => 'Grid Layout', :description => 'A grid layout with table fallback'}
+      svgs: {name: 'Vector Graphics', description: 'SVG graphics with fallbacks'},
+      web_fonts: {name: 'Web Fonts', description: 'Load only one font and caches if possible'},
+      grid: {name: 'Grid Layout', description: 'A grid layout with table fallback'}
     }
   end
 end
