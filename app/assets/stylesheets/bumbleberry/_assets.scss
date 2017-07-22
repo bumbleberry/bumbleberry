@@ -1,4 +1,4 @@
-$bumbleberry-no-markup: false !default;
+@import 'defaults';
 
 @if not $bumbleberry-no-markup {
 	@if not capable_of(svg) {

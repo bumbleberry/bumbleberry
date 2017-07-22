@@ -1,115 +1,126 @@
 @mixin mobile_only {
-	@if $browser_type == mobile {
-		@content;
-	}
+  @if $browser_type == mobile {
+    @content;
+  }
 }
 
 @mixin desktop_only {
-	@if $browser_type == desktop {
-		@content;
-	}
+  @if $browser_type == desktop {
+    @content;
+  }
 }
 
 @function using($_browser, $min_version: 0, $max_version: 0) {
-	@if $browser == $_browser {
-		@if $min_version == 0 and $max_version == 0 {
-			@return true;
-		} @elseif $max_version == 0 {
-			@return $browser_version == $min_version or $browser_version == floor($min_version);
-		}
-		@return ($browser_version >= $min_version and $browser_version <= $max_version);
-	}
-	@return false;
+  @if $browser == $_browser {
+    @if $min_version == 0 and $max_version == 0 {
+      @return true;
+    } @elseif $max_version == 0 {
+      @return $browser_version == $min_version or $browser_version == floor($min_version);
+    }
+    @return ($browser_version >= $min_version and $browser_version <= $max_version);
+  }
+  @return false;
 }
 
 @mixin only_on($_browser, $max_version: 0, $min_version: 0) {
-	@if $browser == $_browser {
-		@if $max_version == 0 or $browser_version <= $max_version {
-			@if $min_version == 0 or $browser_version >= $min_version {
-				@content;
-			}
-		}
-	}
+  @if $browser == $_browser {
+    @if $max_version == 0 or $browser_version <= $max_version {
+      @if $min_version == 0 or $browser_version >= $min_version {
+        @content;
+      }
+    }
+  }
 }
 
 @function breakpoint-to-unit($point) {
-	$min: 0;
-	$max: 0;
-	
-	@if map-has-key($breakpoints, $point) {
-		$bp: map-get(map-get($breakpoints, $point), 'range');
-		
-		$min: nth($bp, 1);
-		@if length($bp) > 1 {
-			$max: nth($bp, 2);
-			$min: nth($bp, 1);
-		}
-	} @else {
-		@return false;
-	}
-	@return ($min, $max);
+  $min: 0;
+  $max: 0;
+  
+  @if map-has-key($breakpoints, $point) {
+    $bp: map-get(map-get($breakpoints, $point), 'range');
+    
+    $min: nth($bp, 1);
+    @if length($bp) > 1 {
+      $max: nth($bp, 2);
+      $min: nth($bp, 1);
+    }
+  } @else {
+    @return false;
+  }
+  @return ($min, $max);
 }
 
 @mixin breakpoint($point1, $point2: 0) {
-	$min: 0;
-	$max: 0;
-	$points1: breakpoint-to-unit($point1);
-	$points2: breakpoint-to-unit($point2);
-	
-	@if $points1 == false {
-		$points1: (0, $point1);
-	}
+  $min: 0;
+  $max: 0;
+  $points1: breakpoint-to-unit($point1);
+  $points2: breakpoint-to-unit($point2);
+  
+  @if length($breakpoints) > 0 {
+    @if $points1 == false {
+      $points1: (0, $point1);
+    }
 
-	@if $points2 == false {
-		@if $point2 > 0 {
-			$points2: ($point2, $point2);
-		} @else {
-			$points2: (0, 0);
-		}
-	}
+    @if $points2 == false {
+      // if we got an invalid value just use the minimuum
+      @if not is-number($point2) {
+        $point2: 0;
+      }
 
-	$min: nth($points1, 1);
-	$max: nth($points2, 1);
+      @if $point2 > 0 {
+        // if we have a positive number then use it as the max
+        $points2: ($point2, $point2);
+      } @else {
+        // otherwise use 0 as the max
+        $points2: (0, 0);
+      }
+    }
 
-	@if capable_of(css-mediaqueries) {
-		$query-string: '';
+    $min: nth($points1, 1);
+    $max: nth($points2, 1);
 
-		$platform-range: map-get(map-get($platforms, $browser_type), "range");
-		$p-min: nth($platform-range, 1);
-		$p-max: nth($platform-range, 2);
+    @if capable_of(css-mediaqueries) {
+      $query-string: '';
 
-		@if ($p-max == 0 or $p-max >= $min) and ($p-min <= $min) {
+      $platform-range: map-get(map-get($platforms, $browser_type), "range");
+      $p-min: nth($platform-range, 1);
+      $p-max: nth($platform-range, 2);
 
-			@if $min > 0 {
-				$query-string: '#{$query-string} (min-width: #{$min}#{$breakpoint-unit})';
-				
-				@if $max > 0 {
-					$query-string: '#{$query-string} and';
-				}
-			}
+      @if ($p-max == 0 or $p-max >= $min) and ($p-min <= $min) {
 
-			@if $max > 0 {
-				$query-string: '#{$query-string} (max-width: #{$max - 0.1}#{$breakpoint-unit})';
-			}
-			
-			@if str-length($query-string) > 0 {
-				@media#{$query-string} {
-					@content;
-				}
-			} @else {
-				@content;
-			}
-		}
-	} @elseif $min >= $unresponsive-width and ($max < 1 or $max <= $nonresponsive-width) {
-		@content;
-	}
+        @if $min > 0 {
+          $query-string: '#{$query-string} (min-width: #{$min}#{$breakpoint-unit})';
+          
+          @if $max > 0 {
+            $query-string: '#{$query-string} and';
+          }
+        }
+
+        @if $max > 0 {
+          $query-string: '#{$query-string} (max-width: #{$max - 0.1}#{$breakpoint-unit})';
+        }
+        
+        @if str-length($query-string) > 0 {
+          @media#{$query-string} {
+            @content;
+          }
+        } @else {
+          @content;
+        }
+      }
+    } @elseif $min >= $unresponsive-width and ($max < 1 or $max <= $nonresponsive-width) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
 }
 
 // Includes a rule for a list of selectors, if the list is empty the rule isn't added
 @mixin for_all($selectors) {
-	@if length($selectors) > 0 {
-		#{$selectors} {
-			@content;
-		}
-	}
+  @if length($selectors) > 0 {
+    #{$selectors} {
+      @content;
+    }
+  }
 }
