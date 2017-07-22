@@ -1,6 +1,7 @@
 $bumbleberry-no-markup: true;
 
 @import "bumbleberry";
+@import "bumbleberry/property_mixins";
 
 @each $font, $font-data in $fonts {
   @if map-get($font-data, auto_load) != 'n' {
