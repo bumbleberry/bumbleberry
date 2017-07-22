@@ -10,165 +10,165 @@ $browser_capabilities: () !default;
 //  u:  Unknown
 //  d:  Disabled by default
 @function get_capability($property) {
-	@if not $browser-defined {
-		@return n;
-	}
-	@if map-has-key($browser_capabilities, $property) {
-		@return map-get($browser_capabilities, $property);
-	}
-	@return y;
+  @if not $browser-defined {
+    @return n;
+  }
+  @if map-has-key($browser_capabilities, $property) {
+    @return map-get($browser_capabilities, $property);
+  }
+  @return y;
 }
 
 // return true if the browser can use this property or method
 @function capable_of($property, $strict: false) {
-	$capability: get_capability(map-get($compatibility-map, $property));
-	$capability: str-slice($capability, 0, 1);
-	@return $capability == y or (not $strict and $capability == a);
+  $capability: get_capability(map-get($compatibility-map, $property));
+  $capability: str-slice($capability, 0, 1);
+  @return $capability == y or (not $strict and $capability == a);
 }
 
 // return false if the user has opted out of including some css
 @function supports($property) {
-	@if map-has-key($markup-settings, $property) {
-		@return get_capability(map-get($markup-settings, $property));
-	}
-	@return true;
+  @if map-has-key($markup-settings, $property) {
+    @return get_capability(map-get($markup-settings, $property));
+  }
+  @return true;
 }
 
 @function does($property) {
-	@return supports($property) and capable_of($property);
+  @return supports($property) and capable_of($property);
 }
 
 @function prefix-string($prefix, $string) {
-	@return "-#{$prefix}-#{$string}";
+  @return "-#{$prefix}-#{$string}";
 }
 
 @function prefix($string, $capability) {
-	@if $capability == yx or $capability == ax {
-		@return prefix-string($browser_prefix, $string);
-	}
-	@return $string;
+  @if $capability == yx or $capability == ax {
+    @return prefix-string($browser_prefix, $string);
+  }
+  @return $string;
 }
 
 @function prefix-for($string, $capability-key) {
-	@return prefix($string, get_capability(map-get($compatibility-map, $capability-key)));
+  @return prefix($string, get_capability(map-get($compatibility-map, $capability-key)));
 }
 
 @function _calc($calcValue, $fallbackValue) {
-	@if capable_of(calc) {
-		@return calc(#{$calcValue});
-	} @elseif ($fallbackValue) {
-		@return $fallbackValue;
-	}
+  @if capable_of(calc) {
+    @return calc(#{$calcValue});
+  } @elseif ($fallbackValue) {
+    @return $fallbackValue;
+  }
 }
 
 @mixin _($property, $value) {
-	$capability: get_capability(map-get($compatibility-map, $property));
-	
-	@if $capability == yx or $capability == ax or $capability == y or $capability == a {
-		#{prefix($property, $capability)}: #{$value};
-	} @else {
-		@content;
-	}
+  $capability: get_capability(map-get($compatibility-map, $property));
+  
+  @if $capability == yx or $capability == ax or $capability == y or $capability == a {
+    #{prefix($property, $capability)}: #{$value};
+  } @else {
+    @content;
+  }
 }
 
 @function has_bug($name) {
-	$bug_data: map-get($bug-list, $name);
-	@if not $bug-data {
-		@return false;
-	}
-	@each $data in ($bug-data) {
-		@if type-of($data) == "list" {
-			@if nth($data, 1) == $browser {
-				$versions: nth($data, 2);
-				@if type-of($versions) == "list" {
-					$min: nth($versions, 1);
-					$max: nth($versions, 2);
-					@if ($min == 0 or $browser_version >= $min) and ($max == 0 or $browser_version <= $max) {
-						@return true;
-					}
-				} @elseif $versions == $browser_version or $versions == all {
-					@return true;
-				} @elseif type-of($versions) == "number" and $versions == floor($browser_version) {
-					@return true;
-				}
-			}
-		} @elseif $data == all or $data == $browser {
-			@return true;
-		}
-	}
-	@return false;
+  $bug_data: map-get($bug-list, $name);
+  @if not $bug-data {
+    @return false;
+  }
+  @each $data in ($bug-data) {
+    @if type-of($data) == "list" {
+      @if nth($data, 1) == $browser {
+        $versions: nth($data, 2);
+        @if type-of($versions) == "list" {
+          $min: nth($versions, 1);
+          $max: nth($versions, 2);
+          @if ($min == 0 or $browser_version >= $min) and ($max == 0 or $browser_version <= $max) {
+            @return true;
+          }
+        } @elseif $versions == $browser_version or $versions == all {
+          @return true;
+        } @elseif type-of($versions) == "number" and $versions == floor($browser_version) {
+          @return true;
+        }
+      }
+    } @elseif $data == all or $data == $browser {
+      @return true;
+    }
+  }
+  @return false;
 }
 
 @mixin _-($property, $value) {
-	$capability: get_capability(map-get($compatibility-map, $property));
-	
-	@if $capability == yx or $capability == ax or $capability == y or $capability == a {
-		@if $capability == yx or $capability == ax {
-			$value: prefix-string($browser_prefix, $property);
-		}
-		#{$property}: #{$value};
-	} @else {
-		@content;
-	}
+  $capability: get_capability(map-get($compatibility-map, $property));
+  
+  @if $capability == yx or $capability == ax or $capability == y or $capability == a {
+    @if $capability == yx or $capability == ax {
+      $value: prefix-string($browser_prefix, $property);
+    }
+    #{$property}: #{$value};
+  } @else {
+    @content;
+  }
 }
 
 @function last-child($selector: '') {
-	@if capable_of(last-child) {
-		@return '#{$selector}:last-child';
-	}
-	@return '#{$selector}.last-child';
+  @if capable_of(last-child) {
+    @return '#{$selector}:last-child';
+  }
+  @return '#{$selector}.last-child';
 }
 
 @function rems($rems) {
-	@if capable_of(rem) {
-		@return $rems * 1rem;
-	}
-	@return $rems * 16px;
+  @if capable_of(rem) {
+    @return $rems * 1rem;
+  }
+  @return $rems * 16px;
 }
 
 @mixin selection {
-	::#{prefix-for(selection, css-selection)} {
-		@content;
-	}
+  ::#{prefix-for(selection, css-selection)} {
+    @content;
+  }
 }
 
 @mixin before {
-	$capability: get_capability(css-gencontent);
-	@if ($capability == 'y') {
-		&::before {
-			@content;
-		}
-	} @elseif ($capability == 'p') {
-		&:before {
-			@content;
-		}
-	}
+  $capability: get_capability(css-gencontent);
+  @if ($capability == 'y') {
+    &::before {
+      @content;
+    }
+  } @elseif ($capability == 'p') {
+    &:before {
+      @content;
+    }
+  }
 }
 
 @mixin after {
-	$capability: get_capability(css-gencontent);
-	@if ($capability == 'y') {
-		&::after {
-			@content;
-		}
-	} @elseif ($capability == 'p') {
-		&:after {
-			@content;
-		}
-	}
+  $capability: get_capability(css-gencontent);
+  @if ($capability == 'y') {
+    &::after {
+      @content;
+    }
+  } @elseif ($capability == 'p') {
+    &:after {
+      @content;
+    }
+  }
 }
 
 @mixin before-and-after {
-	$capability: get_capability(css-gencontent);
-	@if ($capability == 'y') {
-		&::before,
-		&::after {
-			@content;
-		}
-	} @elseif ($capability == 'p') {
-		&:before,
-		&:after {
-			@content;
-		}
-	}
+  $capability: get_capability(css-gencontent);
+  @if ($capability == 'y') {
+    &::before,
+    &::after {
+      @content;
+    }
+  } @elseif ($capability == 'p') {
+    &:before,
+    &:after {
+      @content;
+    }
+  }
 }

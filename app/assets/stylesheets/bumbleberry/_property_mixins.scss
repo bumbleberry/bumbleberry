@@ -1,119 +1,119 @@
 $fonts: () !default;
 
 @mixin _fontface($font-name, $font-weight, $font-style) {
-	@font-face {
-		font-family: '#{$font-name}';
-		@content;
-		font-weight: $font-weight;
-		font-style: $font-style;
-	}
+  @font-face {
+    font-family: '#{$font-name}';
+    @content;
+    font-weight: $font-weight;
+    font-style: $font-style;
+  }
 }
 
 @mixin fontface($font-name, $file-name, $svg_id, $ttf-type: ttf, $font-weight: normal, $font-style: normal) {
-	$url: false;
-	$format: false;
-	$can_embed: false;
-	$suffix: '';
+  $url: false;
+  $format: false;
+  $can_embed: false;
+  $suffix: '';
 
-	@if capable_of(woff2) {
-		$url: '#{$file-name}.woff2';
-		$format: 'woff2';
-		$can_embed: true;
-	} @elseif capable_of(woff) {
-		$url: '#{$file-name}.woff';
-		$format: 'woff';
-		$can_embed: true;
-	} @elseif capable_of(ttf) {
-		@if $ttf-type == otf {
-			$url: '#{$file-name}.otf';
-			$format: 'opentype';
-		} @else {
-			$url: '#{$file-name}.ttf';
-			$format: 'truetype';
-		}
-		$can_embed: true;
-	} @elseif capable_of(eot) {
-		$url: '#{$file-name}.eot';
-		$suffix: '?#';
-		$format: 'eot';
-	} @elseif capable_of(svg-fonts) {
-		$url: '#{$file-name}.svg';
-		$suffix: '##{$svg_id}';
-		$format: 'svg';
-	}
-	@if $url {
-		@include _fontface($font-name, $font-weight, $font-style) {
-			@if supports(base64-fonts) and capable_of(datauri) and not has_bug(image-only-data-uris) and not has_bug(broken-base64-woff2) {
-				src: asset-data-url($url) format('#{$format}');
-			} @else {
-				src: url("#{unquote(asset-path($url))}#{$suffix})}") format('#{$format}');
-			}
-		}
-	}
+  @if capable_of(woff2) {
+    $url: '#{$file-name}.woff2';
+    $format: 'woff2';
+    $can_embed: true;
+  } @elseif capable_of(woff) {
+    $url: '#{$file-name}.woff';
+    $format: 'woff';
+    $can_embed: true;
+  } @elseif capable_of(ttf) {
+    @if $ttf-type == otf {
+      $url: '#{$file-name}.otf';
+      $format: 'opentype';
+    } @else {
+      $url: '#{$file-name}.ttf';
+      $format: 'truetype';
+    }
+    $can_embed: true;
+  } @elseif capable_of(eot) {
+    $url: '#{$file-name}.eot';
+    $suffix: '?#';
+    $format: 'eot';
+  } @elseif capable_of(svg-fonts) {
+    $url: '#{$file-name}.svg';
+    $suffix: '##{$svg_id}';
+    $format: 'svg';
+  }
+  @if $url {
+    @include _fontface($font-name, $font-weight, $font-style) {
+      @if supports(base64-fonts) and capable_of(datauri) and not has_bug(image-only-data-uris) and not has_bug(broken-base64-woff2) {
+        src: asset-data-url($url) format('#{$format}');
+      } @else {
+        src: url("#{unquote(asset-path($url))}#{$suffix})}") format('#{$format}');
+      }
+    }
+  }
 }
 
 @function get($map, $key, $default: null) {
-	@if map-has-key($map, $key) {
-		@return map-get($map, $key);
-	} @else {
-		@return $default;
-	}
+  @if map-has-key($map, $key) {
+    @return map-get($map, $key);
+  } @else {
+    @return $default;
+  }
 }
 
 @mixin font($font-key) {
-	@if map-has-key($fonts, $font-key) {
-		$font: map-get($fonts, $font-key);
-		$name: map-get($font, name);
-		$location: map-get($font, location);
-		$svg_id: map-get($font, svg_id);
-		$ttf_type: get($font, ttf_type, ttf);
-		$weight: get($font, weight, normal);
-		$style: get($font, style, normal);
-		@include fontface($name, $location, $svg_id, $ttf_type, $weight, $style);
-	} @else {
-		@content;
-	}
+  @if map-has-key($fonts, $font-key) {
+    $font: map-get($fonts, $font-key);
+    $name: map-get($font, name);
+    $location: map-get($font, location);
+    $svg_id: map-get($font, svg_id);
+    $ttf_type: get($font, ttf_type, ttf);
+    $weight: get($font, weight, normal);
+    $style: get($font, style, normal);
+    @include fontface($name, $location, $svg_id, $ttf_type, $weight, $style);
+  } @else {
+    @content;
+  }
 }
 
 @function has-font($font-key) {
-	@return map-has-key($fonts, $font-key);
+  @return map-has-key($fonts, $font-key);
 }
 
 @mixin font-family($font-key, $fallback: null) {
-	@if has-font($font-key) {
-		$font: map-get($fonts, $font-key);
-		$name: map-get($font, name);
-		$fallback: get($font, fallback, ()) !default;
-		font-family: ('#{$name}', $fallback);
-	} @else {
-		@content;
-	}
+  @if has-font($font-key) {
+    $font: map-get($fonts, $font-key);
+    $name: map-get($font, name);
+    $fallback: get($font, fallback, ()) !default;
+    font-family: ('#{$name}', $fallback);
+  } @else {
+    @content;
+  }
 }
 
 @mixin checkered-background($size, $colour-1, $colour-2: transparent) {
-	$fn: '';
-	$capability: get_capability(map-get($compatibility-map, css-gradients));
-	@if $capability == yx or $capability == ax or $capability == y or $capability == a {
-		$fn: '-#{$browser_prefix}-';
-	}
+  $fn: '';
+  $capability: get_capability(map-get($compatibility-map, css-gradients));
+  @if $capability == yx or $capability == ax or $capability == y or $capability == a {
+    $fn: '-#{$browser_prefix}-';
+  }
     background-image: #{$fn}linear-gradient(45deg, $colour-1 25%,  $colour-2 25%, $colour-2 75%, $colour-1 75%, $colour-1 100%), #{$fn}linear-gradient(45deg, $colour-1 25%,  $colour-2 25%,transparent 75%, $colour-1 75%, $colour-1 100%);
     @include _(background-size, #{($size * 2) ($size * 2)});
     background-position: 0 0, $size $size;
 }
 
 @mixin keyframes($name) {
-	@if capable_of(css-animation) {
-		$keyframes: prefix-for(keyframes, css-animation);
-		@if $keyframes == '-webkit-keyframes' {
-			@-webkit-keyframes #{$name} { @content; }
-		} @elseif $keyframes == '-moz-keyframes' {
-			@-moz-keyframes #{$name} { @content; }
-		} @elseif $keyframes == '-ms-keyframes' {
-			@-ms-keyframes #{$name} { @content; }
-		} @elseif $keyframes == '-o-keyframes' {
-			@-o-keyframes #{$name} { @content; }
-		} @else {
-			@keyframes #{$name} { @content; }
-		}
-	}
+  @if capable_of(css-animation) {
+    $keyframes: prefix-for(keyframes, css-animation);
+    @if $keyframes == '-webkit-keyframes' {
+      @-webkit-keyframes #{$name} { @content; }
+    } @elseif $keyframes == '-moz-keyframes' {
+      @-moz-keyframes #{$name} { @content; }
+    } @elseif $keyframes == '-ms-keyframes' {
+      @-ms-keyframes #{$name} { @content; }
+    } @elseif $keyframes == '-o-keyframes' {
+      @-o-keyframes #{$name} { @content; }
+    } @else {
+      @keyframes #{$name} { @content; }
+    }
+  }
 }

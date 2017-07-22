@@ -9,16 +9,17 @@ $breakpoints: () !default;
 $bumbleberry-no-markup: false !default;
 
 @if type-of($row-width) == number {
-	$row-width: unquote("#{$row-width}#{$breakpoint-unit}");
+  $row-width: unquote("#{$row-width}#{$breakpoint-unit}");
 }
 
 $default-float: left !default;
 $opposite-direction: right;
 @if $default-float == right {
-	$opposite-direction: left;
+  $opposite-direction: left;
 }
 
 $last-child-float: $opposite-direction !default;
+
 
 //
 // Grid Functions
@@ -28,52 +29,60 @@ $last-child-float: $opposite-direction !default;
 // $colNumber - Found in settings file
 // $totalColumns - Found in settings file
 @function grid-calc($colNumber, $totalColumns) {
-	@return percentage(($colNumber / $totalColumns));
+  @return percentage(($colNumber / $totalColumns));
 }
 
 //
 // @mixins
 //
 
+@mixin clearfix {
+  @if capable_of(css-gencontent) {
+    &:before, &:after { content: " "; display: table; }
+    &:after { clear: both; }
+  }
+}
+
 // For creating container, nested, and collapsed rows.
 //
 //
 // $behavior - Any special behavior for this row? Default: false. Options: nest, collapse, nest-collapse, false.
+
 @mixin grid-row($behavior: false) {
 
-	// use @include grid-row(nest); to include a nested row
-	@if not capable_of(css-mediaqueries) {
-		width: #{$unresponsive-width}#{$breakpoint-unit};
-		margin: 0 auto;
-	} @elseif $behavior == nest {
-		width: auto;
-		margin-#{$default-float}: -($column-gutter/2);
-		margin-#{$opposite-direction}: -($column-gutter/2);
-		margin-top: 0;
-		margin-bottom: 0;
-		max-width: none;
-	} @else if $behavior == collapse {
-		// use @include grid-row(collapse); to collapsed a container row margins
-		width: 100%;
-		margin: 0;
-		max-width: $row-width;
-	} @else if $behavior == nest-collapse {
-		// use @include grid-row(nest-collapse); to collapse outer margins on a nested row
-		width: auto;
-		margin: 0;
-		max-width: none;
-	} @else {
-		// use @include grid-row; to use a container row
-		width: 100%;
-		margin-#{$default-float}: auto;
-		margin-#{$opposite-direction}: auto;
-		margin-top: 0;
-		margin-bottom: 0;
-		max-width: $row-width;
-	}
+  // use @include grid-row(nest); to include a nested row
+  @if not capable_of(css-mediaqueries) {
+    width: #{$unresponsive-width}#{$breakpoint-unit};
+    margin: 0 auto;
+  } @elseif $behavior == nest {
+    width: auto;
+    margin-#{$default-float}: -($column-gutter/2);
+    margin-#{$opposite-direction}: -($column-gutter/2);
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: none;
+  } @else if $behavior == collapse {
+    // use @include grid-row(collapse); to collapsed a container row margins
+    width: 100%;
+    margin: 0;
+    max-width: $row-width;
+  } @else if $behavior == nest-collapse {
+    // use @include grid-row(nest-collapse); to collapse outer margins on a nested row
+    width: auto;
+    margin: 0;
+    max-width: none;
+  } @else {
+    // use @include grid-row; to use a container row
+    width: 100%;
+    margin-#{$default-float}: auto;
+    margin-#{$opposite-direction}: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: $row-width;
+  }
 
-	// Clearfix for all rows
-	@include clearfix();
+  // Clearfix for all rows
+  @include clearfix;
 }
 
 // Creates a column, should be used inside of a media query to control layouts
@@ -87,66 +96,66 @@ $last-child-float: $opposite-direction !default;
 // $collapse - Get rid of gutter padding on column? Default: false.
 // $float - Should this float? Default: true. Options: true, false, left, right.
 @mixin grid-column(
-	$columns: false,
-	$last-column: false,
-	$center: false,
-	$offset: false,
-	$push: false,
-	$pull: false,
-	$collapse: false,
-	$float: true,
-	$position: false) {
+  $columns: false,
+  $last-column: false,
+  $center: false,
+  $offset: false,
+  $push: false,
+  $pull: false,
+  $collapse: false,
+  $float: true,
+  $position: false) {
 
-	// If positioned for default .column, include relative position
-	// push and pull require position set
-	@if $position or $push or $pull {
-		position: relative;
-	}
+  // If positioned for default .column, include relative position
+  // push and pull require position set
+  @if $position or $push or $pull {
+    position: relative;
+  }
 
-	// If collapsed, get rid of gutter padding
-	@if $collapse {
-		padding-left: 0;
-		padding-right: 0;
-	} @else if $collapse == false {
-		// Gutter padding whenever a column isn't set to collapse
-		// (use $collapse:null to do nothing)
-		padding-left: $column-gutter / 2;
-		padding-right: $column-gutter / 2;
-	}
+  // If collapsed, get rid of gutter padding
+  @if $collapse {
+    padding-left: 0;
+    padding-right: 0;
+  } @else if $collapse == false {
+    // Gutter padding whenever a column isn't set to collapse
+    // (use $collapse:null to do nothing)
+    padding-left: $column-gutter / 2;
+    padding-right: $column-gutter / 2;
+  }
 
-	@if capable_of(css3-boxsizing) {
-		// If a column number is given, calculate width
-		@if $columns {
-			width: grid-calc($columns, $total-columns);
+  @if capable_of(css3-boxsizing) {
+    // If a column number is given, calculate width
+    @if $columns {
+      width: grid-calc($columns, $total-columns);
 
-			// If last column, float naturally instead of to the right
-			@if $last-column { float: $opposite-direction; }
-		}
+      // If last column, float naturally instead of to the right
+      @if $last-column { float: $opposite-direction; }
+    }
 
-		// Source Ordering, adds left/right depending on which you use.
-		@if $push { #{$default-float}: grid-calc($push, $total-columns); #{$opposite-direction}: auto; }
-		@if $pull { #{$opposite-direction}: grid-calc($pull, $total-columns); #{$default-float}: auto; }
+    // Source Ordering, adds left/right depending on which you use.
+    @if $push { #{$default-float}: grid-calc($push, $total-columns); #{$opposite-direction}: auto; }
+    @if $pull { #{$opposite-direction}: grid-calc($pull, $total-columns); #{$default-float}: auto; }
 
-		@if $float {
-			@if $float == left or $float == true { float: $default-float; }
-			@else if $float == right { float: $opposite-direction; }
-			@else { float: none; }
-		}
+    @if $float {
+      @if $float == left or $float == true { float: $default-float; }
+      @else if $float == right { float: $opposite-direction; }
+      @else { float: none; }
+    }
 
-		// If centered, get rid of float and add appropriate margins
-		@if $center {
-			margin-#{$default-float}: auto;
-			margin-#{$opposite-direction}: auto;
-			float: none;
-		}
+    // If centered, get rid of float and add appropriate margins
+    @if $center {
+      margin-#{$default-float}: auto;
+      margin-#{$opposite-direction}: auto;
+      float: none;
+    }
 
-		// If offset, calculate appropriate margins
-		@if $offset { margin-#{$default-float}: grid-calc($offset, $total-columns) !important; }
-	} @else {
-		vertical-align: top;
-		padding-top: 0;
-		padding-bottom: 0;
-	}
+    // If offset, calculate appropriate margins
+    @if $offset { margin-#{$default-float}: grid-calc($offset, $total-columns) !important; }
+  } @else {
+    vertical-align: top;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 
 // Create presentational classes for grid
@@ -154,187 +163,187 @@ $last-child-float: $opposite-direction !default;
 // $size - Name of class to use, i.e. "large" will generate .large-1, .large-2, etc.
 @mixin grid-html-classes($size, $grid:true, $push:true, $pull:true, $offset:true, $centered:true, $reset-order:true) {
 
-	@for $i from 0 through $total-columns - 1 {
-		@if $push == true or index($push, $i) {
-			.#{$size}-push-#{$i} {
-				@include grid-column($push:$i, $collapse:null, $float:false);
-			}
-		}
-		@if $pull == true or index($pull, $i) {
-			.#{$size}-pull-#{$i} {
-				@include grid-column($pull:$i, $collapse:null, $float:false);
-			}
-		}
-	}
+  @for $i from 0 through $total-columns - 1 {
+    @if $push == true or index($push, $i) {
+      .#{$size}-push-#{$i} {
+        @include grid-column($push:$i, $collapse:null, $float:false);
+      }
+    }
+    @if $pull == true or index($pull, $i) {
+      .#{$size}-pull-#{$i} {
+        @include grid-column($pull:$i, $collapse:null, $float:false);
+      }
+    }
+  }
 
-	.columns {
-		@include grid-column($columns:false, $position:true);
-	}
+  .columns {
+    @include grid-column($columns:false, $position:true);
+  }
 
 
-	@for $i from 1 through $total-columns {
-		@if $grid == true or index($grid, $i) {
-			.#{$size}-#{$i} {
-				@include grid-column($columns:$i,$collapse:null,$float:false);
-			}
-		}
-	}
+  @for $i from 1 through $total-columns {
+    @if $grid == true or index($grid, $i) {
+      .#{$size}-#{$i} {
+        @include grid-column($columns:$i,$collapse:null,$float:false);
+      }
+    }
+  }
 
-	@if $offset {
-		@for $i from 0 through $total-columns - 1 {
-			@if $offset == true or index($offset, $i) {
-				.#{$size}-offset-#{$i} {
-					@include grid-column($offset:$i, $collapse:null,$float:false);
-				}
-			}
-		}
-	}
+  @if $offset {
+    @for $i from 0 through $total-columns - 1 {
+      @if $offset == true or index($offset, $i) {
+        .#{$size}-offset-#{$i} {
+          @include grid-column($offset:$i, $collapse:null,$float:false);
+        }
+      }
+    }
+  }
 
-	@if $reset-order {
-		.#{$size}-reset-order {
-			margin-#{$default-float}: 0;
-			margin-#{$opposite-direction}: 0;
-			left: auto;
-			right: auto;
-			float: $default-float;
-		}
-	}
-	
-	@if $centered {
-		.columns.#{$size}-centered {
-			@include grid-column($center:true, $collapse:null, $float:false);
-		}
+  @if $reset-order {
+    .#{$size}-reset-order {
+      margin-#{$default-float}: 0;
+      margin-#{$opposite-direction}: 0;
+      left: auto;
+      right: auto;
+      float: $default-float;
+    }
+  }
+  
+  @if $centered {
+    .columns.#{$size}-centered {
+      @include grid-column($center:true, $collapse:null, $float:false);
+    }
 
-		.columns.#{$size}-uncentered {
-			margin-#{$default-float}: 0;
-			margin-#{$opposite-direction}: 0;
-			float: $default-float;
-		}
+    .columns.#{$size}-uncentered {
+      margin-#{$default-float}: 0;
+      margin-#{$opposite-direction}: 0;
+      float: $default-float;
+    }
 
-		// Fighting [class*="column"] + [class*="column"]:last-child
-		.columns.#{$size}-centered#{last-child()} {
-			float: none;
-		}
+    // Fighting [class*="column"] + [class*="column"]:last-child
+    .columns.#{$size}-centered#{last-child()} {
+      float: none;
+    }
 
-		// Fighting .column.<previous-size>-centered:last-child
-		.columns.#{$size}-uncentered#{last-child()} {
-			float: $default-float;
-		}
+    // Fighting .column.<previous-size>-centered:last-child
+    .columns.#{$size}-uncentered#{last-child()} {
+      float: $default-float;
+    }
 
-		.columns.#{$size}-uncentered.opposite {
-			float: $opposite-direction;
-		}
-	}
+    .columns.#{$size}-uncentered.opposite {
+      float: $opposite-direction;
+    }
+  }
 }
 @mixin grid-html {
-	.row {
-		@include grid-row;
+  .row {
+    @include grid-row;
 
-		&.collapse {
-			@if capable_of(css-sel2) {
-				> .columns {
-					@include grid-column($collapse:true, $float:false);
-				}
-			} @else {
-				.columns.collapse {
-					@include grid-column($collapse:true, $float:false);
-				}
-			}
+    &.collapse {
+      @if capable_of(css-sel2) {
+        > .columns {
+          @include grid-column($collapse:true, $float:false);
+        }
+      } @else {
+        .columns.collapse {
+          @include grid-column($collapse:true, $float:false);
+        }
+      }
 
-			.row {
-				margin-left: 0;
-				margin-right: 0;
-			}
-		}
+      .row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
 
-		.row {
-			@include grid-row($behavior:nest);
-			&.collapse {
-				@include grid-row($behavior:nest-collapse);
-			}
-		}
-	}
+    .row {
+      @include grid-row($behavior:nest);
+      &.collapse {
+        @include grid-row($behavior:nest-collapse);
+      }
+    }
+  }
 
-	.columns {
-		@include grid-column($columns:$total-columns);
-	}
+  .columns {
+    @include grid-column($columns:$total-columns);
+  }
 
-	@if capable-of(css-sel2) {
-		[class*="column"] + [class*="column"]#{last-child()} { float: $last-child-float; }
-		[class*="column"] + [class*="column"].end { float: $default-float; }
-	} @else {
-		column.middle#{last-child()} { float: $last-child-float; }
-		column.middle.end { float: $default-float; }
-	}
+  @if capable-of(css-sel2) {
+    [class*="column"] + [class*="column"]#{last-child()} { float: $last-child-float; }
+    [class*="column"] + [class*="column"].end { float: $default-float; }
+  } @else {
+    column.middle#{last-child()} { float: $last-child-float; }
+    column.middle.end { float: $default-float; }
+  }
 
-	@if not capable_of(css3-boxsizing) {
-		th.column-set {
-			width: 100% / $total-columns;
-			padding: 0;
-		}
-	}
+  @if not capable_of(css3-boxsizing) {
+    th.column-set {
+      width: 100% / $total-columns;
+      padding: 0;
+    }
+  }
 
-	$gridpush: $grid-push;
-	@if $grid-push == y { $gridpush: true; }
-	@elseif $grid-push == n { $gridpush: false; }
+  $gridpush: $grid-push;
+  @if $grid-push == y { $gridpush: true; }
+  @elseif $grid-push == n { $gridpush: false; }
 
-	$gridpull: $grid-pull;
-	@if $grid-pull == y { $gridpull: true; }
-	@elseif $grid-pull == n { $gridpull: false; }
+  $gridpull: $grid-pull;
+  @if $grid-pull == y { $gridpull: true; }
+  @elseif $grid-pull == n { $gridpull: false; }
 
-	@each $size, $breakpoint in ($breakpoints) {
+  @each $size, $breakpoint in ($breakpoints) {
 
-		$grid: map-get($breakpoint, "grid");
-		@if $grid == y { $grid: true; }
-		@elseif not map-has-key($breakpoint, 'grid') or $grid == n { $grid: false; }
+    $grid: map-get($breakpoint, "grid");
+    @if $grid == y { $grid: true; }
+    @elseif not map-has-key($breakpoint, 'grid') or $grid == n { $grid: false; }
 
-		@if $grid {
+    @if $grid {
 
-			@include breakpoint($size) {
-				$push: map-get($breakpoint, 'push');
-				@if not map-has-key($breakpoint, 'push') { $push: $gridpush; }
-				@elseif $push == y { $push: true; }
-				@elseif $push == n { $push: false; }
+      @include breakpoint($size) {
+        $push: map-get($breakpoint, 'push');
+        @if not map-has-key($breakpoint, 'push') { $push: $gridpush; }
+        @elseif $push == y { $push: true; }
+        @elseif $push == n { $push: false; }
 
-				$pull: map-get($breakpoint, 'pull');
-				@if not map-has-key($breakpoint, 'pull') { $pull: $gridpull; }
-				@elseif $pull == y { $pull: true; }
-				@elseif $pull == n { $pull: false; }
+        $pull: map-get($breakpoint, 'pull');
+        @if not map-has-key($breakpoint, 'pull') { $pull: $gridpull; }
+        @elseif $pull == y { $pull: true; }
+        @elseif $pull == n { $pull: false; }
 
-				$offset: map-get($breakpoint, 'offset');
-				@if not map-has-key($breakpoint, 'offset') or $offset == y { $offset: true; }
-				@elseif $offset == n { $offset: false; }
+        $offset: map-get($breakpoint, 'offset');
+        @if not map-has-key($breakpoint, 'offset') or $offset == y { $offset: true; }
+        @elseif $offset == n { $offset: false; }
 
-				$centered: map-get($breakpoint, 'centered');
-				@if not map-has-key($breakpoint, 'centered') or $centered == y { $centered: true; }
-				@elseif $centered == n { $centered: false; }
+        $centered: map-get($breakpoint, 'centered');
+        @if not map-has-key($breakpoint, 'centered') or $centered == y { $centered: true; }
+        @elseif $centered == n { $centered: false; }
 
-				$reset-order: map-get($breakpoint, 'reset-order');
-				@if not map-has-key($breakpoint, 'reset-order') or $reset-order == y { $reset-order: true; }
-				@elseif $reset-order == n { $reset-order: false; }
+        $reset-order: map-get($breakpoint, 'reset-order');
+        @if not map-has-key($breakpoint, 'reset-order') or $reset-order == y { $reset-order: true; }
+        @elseif $reset-order == n { $reset-order: false; }
 
-				@include grid-html-classes($size, $grid, $push, $pull, $offset, $centered, $reset-order);
+        @include grid-html-classes($size, $grid, $push, $pull, $offset, $centered, $reset-order);
 
-				@if nth(map-get($breakpoint, 'range'), 1) > 0 {
+        @if nth(map-get($breakpoint, 'range'), 1) > 0 {
 
-					@for $i from 0 through $total-columns - 1 {
-						@if $gridpush == true or index($gridpush, $i) {
-							.push-#{$i} {
-								@include grid-column($push:$i, $collapse:null, $float:false);
-							}
-						}
-						@if $gridpull == true or index($gridpull, $i) {
-							.pull-#{$i} {
-								@include grid-column($pull:$i, $collapse:null, $float:false);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+          @for $i from 0 through $total-columns - 1 {
+            @if $gridpush == true or index($gridpush, $i) {
+              .push-#{$i} {
+                @include grid-column($push:$i, $collapse:null, $float:false);
+              }
+            }
+            @if $gridpull == true or index($gridpull, $i) {
+              .pull-#{$i} {
+                @include grid-column($pull:$i, $collapse:null, $float:false);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @if not $bumbleberry-no-markup {
-	@include grid-html;
+  @include grid-html;
 }

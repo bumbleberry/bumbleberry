@@ -1,25 +1,25 @@
 @import 'defaults';
 
 @if not $bumbleberry-no-markup {
-	@if not capable_of(svg) {
-		@each $sprite-name, $sprite in $sprites {
-			.sprite.#{$sprite-name} {
-				$filename: '#{$sprite-name}.png';
+  @if not capable_of(svg) {
+    @each $sprite-name, $sprite in $sprites {
+      .sprite.#{$sprite-name} {
+        $filename: '#{$sprite-name}.png';
 
-				@if not capable_of(png-alpha) {
-					$filename: '#{$sprite-name}.gif';
-				}
+        @if not capable_of(png-alpha) {
+          $filename: '#{$sprite-name}.gif';
+        }
 
-				background-image: url(asset-path($filename));
-				margin: auto;
-			}
-			@each $sprite-id, $coords in $sprite {
-				.sprite.#{$sprite-name}.#{$sprite-id} {
-					width: nth($coords, 3);
-					height: nth($coords, 4);
-					background-position: (-1 * nth($coords, 1)) (-1 * nth($coords, 2));
-				}
-			}
-		}
-	}
+        background-image: url(asset-path($filename));
+        margin: auto;
+      }
+      @each $sprite-id, $coords in $sprite {
+        .sprite.#{$sprite-name}.#{$sprite-id} {
+          width: nth($coords, 3);
+          height: nth($coords, 4);
+          background-position: (-1 * nth($coords, 1)) (-1 * nth($coords, 2));
+        }
+      }
+    }
+  }
 }
